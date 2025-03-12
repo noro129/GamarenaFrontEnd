@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+:root{
+    --bg-color: #000a1d;
+    --bg-color-b: #ee2b1e;
+    --color: rgb(255, 225, 214);
+    --color-2: #750955;
+
+
+    --black: #020A0Bff;
+    --rich-black: #020E11ff;
+    --battleship-gray: #828889ff;
+    --platinum: #E0E3E3ff;
+    --timberwolf: #D3D4D2ff;
+
+}
+
+
+*,*::after,*::before,body{
+    border: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
