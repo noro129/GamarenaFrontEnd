@@ -1,0 +1,38 @@
+nav{
+    width: 100vw;
+    height: 80px;
+    background-color: var(--rich-black);
+    position: relative;
+
+    div,button {
+        position: absolute;
+        top: 25%;
+    }
+
+    div {
+        left: 20px;
+        img{
+            width: 50px;
+        }
+    }
+
+    button {
+        right: 20px;
+        color: var(--rich-black);
+        background-color: var(--timberwolf);
+        font-family: 'Poppins', sans-serif;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 900;
+        width: 100px;
+        height: 40px;
+
+        &:hover {
+            opacity: .7;
+        }
+
+        &:active{
+            background-color: var(--color-2);
+        }
+    }
+}

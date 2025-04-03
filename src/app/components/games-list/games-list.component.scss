@@ -1,0 +1,26 @@
+.games-container{
+    width: 90vw;
+    height: max-content;
+    margin: 80px auto;
+    border-top: 4px solid var(--battleship-gray);
+    border-bottom: 4px solid var(--rich-black);
+    border-left: 4px solid var(--battleship-gray);
+    border-right: 4px solid var(--rich-black);
+    padding: 20px;
+    display: flex;
+    row-gap: 20px;
+    column-gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--timberwolf);
+
+    >*{
+        overflow: hidden;
+        border-top-left-radius: 70px;
+        border-top-right-radius: 50px;
+        border-bottom-left-radius: 30px;
+        width: 25%;
+        height: max-content;
+    }
+}

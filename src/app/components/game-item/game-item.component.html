@@ -1,1 +1,11 @@
-<p>game-item works!</p>
+<div class="game-card">
+    <div class="game-container">
+        <img src="{{getGameImage(gameName)}}" alt="{{getGameImage(gameName)}}" class="game-image">
+        <div class="details">
+            <h3 class="game-name">{{gameName}}</h3>
+            <p class="game-description">{{gameDescription}}</p>
+            <div class="game-players-number">{{gamePlayersNumber}}</div>
+            <button class="like-button" (click)="likePressed()" [ngClass]="{'not-liked' : !isGameLiked}"><img src="icon/heart.png" alt="heart icon"></button>
+        </div>
+    </div>
+</div>

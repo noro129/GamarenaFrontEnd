@@ -1,1 +1,10 @@
-<p>games-list works!</p>
+<app-nav-bar></app-nav-bar>
+<div class="games-container">
+    <app-game-item *ngFor="let game of gamesList"
+    [gameName]="game.gameName"
+    [gameDescription]="game.gameDescription"
+    [gameLikesNumber]="game.gameLikesNumber"
+    [gamePlayersNumber]="game.gamePlayersNumber"
+    [isGameLiked]="game.isGameLiked"
+    />
+</div>
