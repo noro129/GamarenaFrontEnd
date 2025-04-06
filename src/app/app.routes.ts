@@ -12,5 +12,9 @@ export const routes: Routes = [
         path : 'games-list',
         pathMatch : 'full',
         component : GamesListComponent
+    },
+    {
+        path : '**',
+        component : WelcomeComponent
     }
 ];
