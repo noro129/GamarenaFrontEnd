@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WorduessComponent } from './worduess/worduess.component';
 import { RouterModule } from '@angular/router';
+import { TwinsHuntComponent } from './twins-hunt/twins-hunt.component';
 
 
 
@@ -10,8 +10,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule.forChild([
-      { path: '', component: WorduessComponent }
+      { path: '', component: TwinsHuntComponent }
     ])
   ]
 })
-export class WorduessModule { }
+export class TwinsHuntModule { }

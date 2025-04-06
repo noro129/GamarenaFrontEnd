@@ -14,7 +14,21 @@ export const routes: Routes = [
         component : GamesListComponent
     },
     {
-        path : '**',
-        component : WelcomeComponent
+        path : 'game/worduess',
+        pathMatch : 'full',
+        loadChildren : () => 
+            import('./modules/games/worduess/worduess.module').then(m => m.WorduessModule)
+    },
+    {
+        path : 'game/sudoku',
+        pathMatch : 'full',
+        loadChildren : () => 
+            import('./modules/games/sudoku/sudoku.module').then(m => m.SudokuModule)
+    },
+    {
+        path : 'game/twins-hunt',
+        pathMatch : 'full',
+        loadChildren : () => 
+            import('./modules/games/twins-hunt/twins-hunt.module').then(m => m.TwinsHuntModule)
     }
 ];
