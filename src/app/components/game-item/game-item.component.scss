@@ -18,6 +18,10 @@
             & .game-description{
                 transform: translateY(-200%);
             }
+
+            & .details>.game-name{
+                opacity: 1;
+            }
         }
 
         &::after {
@@ -96,6 +100,8 @@
                 width: max-content;
                 position: relative;
                 padding: 0 10px;
+                opacity: 0;
+                transition: all .2s ease-in-out;
 
                 &::after, &::before{
                     z-index: -1;
@@ -131,6 +137,7 @@
             .game-description{
                 translate: 0 200%;
                 width: 80%;
+                margin-top: 10px;
                 transition: transform .3s ease-in-out;
                 
             }
@@ -180,9 +187,8 @@
 
 
 @keyframes pulse {
-    0% { transform: scale(1); }
-    25% { transform: scale(0.8); filter: grayscale(100%); }
-    50% { transform: scale(1.2); }
-    75% { filter: grayscale(80%); }
+    0%   { transform: scale(1); }
+    25%  { transform: scale(0.8); filter: grayscale(100%); }
+    50%  { transform: scale(1.2); }
     100% { transform: scale(1); }
 }

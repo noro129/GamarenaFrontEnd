@@ -1,1 +1,13 @@
-<p>worduess works!</p>
+<div class="container">
+    <button class="instructions" (click)="showInstructionsList()">i</button>
+    <button class="exit" (click)="exit()">X</button>
+    <div class="instructions-list" *ngIf="showInstructions">
+        <button class="close-instructions">close</button>
+    </div>
+    <div class="game">
+        <div *ngFor="let attempt of attempts; index as i" class="row">
+            <p *ngFor="let letter of attempt; index as j" class="letter"
+            [ngClass]="{'correct' : attemptsValidation[i][j]==1, 'incorrect' : attemptsValidation[i][j]==-1, 'close' : attemptsValidation[i][j]==-2}">{{letter | uppercase}}</p>
+        </div>
+    </div>
+</div>
