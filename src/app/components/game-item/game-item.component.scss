@@ -61,7 +61,7 @@
                 content: ">";
                 position: absolute;
                 top: 3px;
-                animation: infinite 1s infiniteTranslation;
+                animation: infiniteTranslation 1s linear infinite;
             }
 
             &::before{
@@ -69,7 +69,7 @@
             }
 
             &::after{
-                left: 8px;
+                left: 15px;
             }
 
             &:hover{
@@ -81,7 +81,7 @@
         }
 
         @keyframes infiniteTranslation{
-            100%{ transform: translateX(27px);}
+            100%{ transform: translateX(35px);}
         }
 
         .details{
