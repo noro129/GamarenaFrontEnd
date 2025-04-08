@@ -1,9 +1,10 @@
 import { NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
+import { TimerComponent } from '../../../../components/timer/timer.component';
 
 @Component({
   selector: 'app-worduess',
-  imports: [NgIf, NgFor, NgClass, UpperCasePipe],
+  imports: [NgIf, NgFor, NgClass, UpperCasePipe, TimerComponent],
   templateUrl: './worduess.component.html',
   styleUrl: './worduess.component.scss'
 })

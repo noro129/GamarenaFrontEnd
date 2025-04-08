@@ -1,0 +1,40 @@
+/* Fixed top center container with flex layout */
+.container {
+    position: fixed;
+    top: 20px;             
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;         
+    display: flex;
+    align-items: center;
+    font-family: sans-serif;
+    perspective: 800px;
+
+    .minutes, .seconds {
+        display: flex;
+
+        div{
+            width: 60px;
+            height: 80px;
+            background: linear-gradient(to bottom, #222 0%, #222 50%, #333 50%, #333 100%);
+            color: #fff;
+            font-size: 3rem;
+            text-align: center;
+            line-height: 80px;
+            margin: 0 2px;
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: transform 0.4s;
+        }
+    }
+
+    .separator {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #333;
+        margin: 0 5px;
+    }
+
+
+}
