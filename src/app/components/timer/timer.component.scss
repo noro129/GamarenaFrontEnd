@@ -1,10 +1,10 @@
 /* Fixed top center container with flex layout */
 .container {
     position: fixed;
-    top: 20px;             
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 9999;         
+    z-index: 9999;
     display: flex;
     align-items: center;
     font-weight: bolder;
@@ -14,6 +14,7 @@
         display: flex;
 
         div{
+            cursor: default;
             width: 60px;
             height: 80px;
             background: linear-gradient(to bottom, #222 0%, #222 50%, #333 50%, #333 100%);

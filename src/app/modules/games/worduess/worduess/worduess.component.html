@@ -7,7 +7,13 @@
     <div class="game">
         <div *ngFor="let attempt of attempts; index as i" class="row" [ngClass]="{'destroy' : destroyAttempt[i]}">
             <p *ngFor="let letter of attempt; index as j" class="letter"
-            [ngClass]="{'correct' : attemptsValidation[i][j]==1, 'incorrect' : attemptsValidation[i][j]==-1, 'close' : attemptsValidation[i][j]==-2}">{{letter | uppercase}}</p>
+            [ngClass]="{'correct' : attemptsValidation[i][j]==1,
+                        'incorrect' : attemptsValidation[i][j]==-1,
+                        'close' : attemptsValidation[i][j]==-2,
+                        'highlight' : i==currentAttempt && j==currentIndex
+                        }">
+            {{letter | uppercase}}
+        </p>
         </div>
     </div>
 </div>
