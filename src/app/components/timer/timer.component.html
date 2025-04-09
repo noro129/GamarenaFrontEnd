@@ -1,11 +1,11 @@
 <div class="container">
     <div class="minutes">
-        <div class="minute-left-digit" [attr.value]="leftDigit(minutes+1)" [ngClass]="{'animate' : animate_minute_left_digit}">{{leftDigit(minutes)}}</div>
-        <div class="minute-right-digit" [attr.value]="(minutes+1)%10" [ngClass]="{'animate' : animate_minute_right_digit}">{{minutes%10}}</div>
+        <div class="minute-left-digit" [attr.value]="leftDigit(minutes)" [ngClass]="{'animate' : animate_minute_left_digit}">{{leftDigit(minutes)}}</div>
+        <div class="minute-right-digit" [attr.value]="(minutes)%10" [ngClass]="{'animate' : animate_minute_right_digit}">{{minutes%10}}</div>
     </div>
     <div class="separator">{{separator}}</div>
     <div class="seconds">
-        <div class="second-left-digit" [attr.value]="leftDigit(seconds+1)%6" [ngClass]="{'animate' : animate_second_left_digit}">{{leftDigit(seconds)}}</div>
-        <div class="second-right-digit" [attr.value]="(seconds+1)%10" [ngClass]="{'animate' : animate_second_right_digit}">{{seconds%10}}</div>
+        <div class="second-left-digit" [attr.value]="leftDigit(seconds)%6" [ngClass]="{'animate' : animate_second_left_digit}">{{leftDigit(seconds)}}</div>
+        <div class="second-right-digit" [attr.value]="(seconds)%10" [ngClass]="{'animate' : animate_second_right_digit}">{{seconds%10}}</div>
     </div>
 </div>

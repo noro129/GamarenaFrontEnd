@@ -47,7 +47,7 @@ export class TimerComponent implements OnInit, OnDestroy {
         this.animate_second_left_digit = false;
         this.animate_minute_right_digit = false;
         this.animate_minute_left_digit = false;
-      }, 300);
+      }, 800);
     }, 1000);
   }
   
