@@ -1,0 +1,8 @@
+<div *ngIf="isVisible" class="overlay">
+    <div class="message-container" [ngClass]="{ 'animate-success': isSuccess, 'animate-failure': !isSuccess }">
+      <div class="confetti" *ngIf="isSuccess">🎉🎊🎉</div>
+      <h1>{{ isSuccess ? 'You Won!' : 'You Failed!' }}</h1>
+      <p>{{ isSuccess ? 'Great job solving the game!' : 'Oops! Better luck next time.' }}</p>
+    </div>
+  </div>
+  
