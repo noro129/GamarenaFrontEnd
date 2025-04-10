@@ -1,11 +1,11 @@
 import { NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnChanges, SimpleChanges } from '@angular/core';
 import { TimerComponent } from '../../../../components/timer/timer.component';
 import { GameToolbarComponent } from "../../../../components/game-toolbar/game-toolbar.component";
 
 @Component({
   selector: 'app-worduess',
-  imports: [NgIf, NgFor, NgClass, UpperCasePipe, TimerComponent, GameToolbarComponent],
+  imports: [NgFor, NgClass, UpperCasePipe, TimerComponent, GameToolbarComponent],
   templateUrl: './worduess.component.html',
   styleUrl: './worduess.component.scss'
 })
@@ -34,7 +34,7 @@ export class WorduessComponent {
   showInstructions = false;
   currentWord = '     ';
   currentAttempt = 0;
-  currentIndex = 0;
+  currentIndex = -1;
   startGame = false;
 
   wordToGuess = '';
@@ -67,7 +67,9 @@ export class WorduessComponent {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if(this.gameSolved) return;
+    if(!this.startGame || this.gameSolved) {
+      return;
+    }
     if(/^[A-Z]$/.test(event.key.toUpperCase())){
       if (this.currentIndex==5) return;
       this.attempts[this.currentAttempt][this.currentIndex] = event.key;
@@ -147,8 +149,9 @@ export class WorduessComponent {
   }
 
 
-  exit() {
-    console.log("quitting...");
+  handleGameStart(event : boolean) {
+    this.startGame = true;
+    this.currentIndex=0;
   }
 
 }

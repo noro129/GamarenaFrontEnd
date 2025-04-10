@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { delay } from 'rxjs';
 
 @Component({
@@ -8,24 +8,26 @@ import { delay } from 'rxjs';
   templateUrl: './timer.component.html',
   styleUrl: './timer.component.scss'
 })
-export class TimerComponent implements OnInit, OnDestroy {
+export class TimerComponent implements OnDestroy, OnChanges {
   
   @Input() separator = ':';
   @Input() minutes = 0;
   @Input() seconds = 0;
+  @Input() startTimer = false;
   @Input() stopTimer = false;
   animate_minute_left_digit = false;
   animate_minute_right_digit = false;
   animate_second_left_digit = false;
   animate_second_right_digit = false;
-  
-  
-  ngOnInit(): void {
-    this.timer();
-  }
 
   ngOnDestroy(): void {
     this.stopTimer=true;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['startTimer'] && changes['startTimer'].currentValue) {
+      this.timer();
+    }
   }
   
 
