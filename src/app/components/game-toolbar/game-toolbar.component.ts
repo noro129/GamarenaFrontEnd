@@ -1,9 +1,10 @@
 import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-game-toolbar',
-  imports: [NgIf],
+  imports: [NgIf, RouterLink],
   templateUrl: './game-toolbar.component.html',
   styleUrl: './game-toolbar.component.scss'
 })
@@ -14,10 +15,13 @@ export class GameToolbarComponent {
   gameStarted = false;
   gameStopped = false;
 
+  exitGameDialogueShown = false;
+
 
   showInstructionsList() {this.showInstructions=true;}
   hideInstructions() {this.showInstructions=false;}
-  exit() {}
+  showExitGameDialogue() {this.exitGameDialogueShown=true;}
+  hideExitGameDialogue() {this.exitGameDialogueShown=false;}
   showHint() {this.numberOfHintsLeft--;}
   startGame() {
     this.gameStarted=true;

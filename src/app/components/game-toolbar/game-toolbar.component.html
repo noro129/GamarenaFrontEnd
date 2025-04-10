@@ -3,17 +3,29 @@
         <button class="instructions" (click)="showInstructionsList()">?</button>
     </span>
     <span class="button-wrapper">
-        <button class="exit" (click)="exit()">X</button>
+        <button class="exit" (click)="showExitGameDialogue()">X</button>
     </span>
 </div>
 
+<div class="overlay" *ngIf="showInstructions || exitGameDialogueShown">
+    <div class="instructions-list" *ngIf="showInstructions">
+        <span class="button-wrapper">
+            <button class="close-instructions" (click)="hideInstructions()">close</button>
+        </span>
+    </div>
 
-<div class="instructions-list" *ngIf="showInstructions">
-    <span class="button-wrapper">
-        <button class="close-instructions" (click)="hideInstructions()">close</button>
-    </span>
+    <div class="exit-dialogue" *ngIf="exitGameDialogueShown">
+        <p class="exit-message">Are You Sure?</p>
+        <div class="yes-no-buttons">
+            <span class="button-wrapper">
+                <button class="exit-yes" routerLink="/games-list">Yes</button>
+            </span>
+            <span class="button-wrapper">
+                <button class="exit-no" (click)="hideExitGameDialogue()">No</button>
+            </span>
+        </div>
+    </div>
 </div>
-
 
 
 <div class="game-controls">

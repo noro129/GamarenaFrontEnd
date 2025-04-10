@@ -22,7 +22,7 @@
             border-radius: 10%;
             z-index: -1;
         }
-  
+
         button {
             background-color: #222;
             color: var(--battleship-gray);
@@ -38,12 +38,88 @@
             transition: transform 0.05s ease, opacity 0.05s ease;
     
             &:hover{opacity: .9;}
-  
+
         
             &:active{transform: translateX(-2px) translateY(-2px);}
         }
     }
 }
+
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .exit-dialogue{
+        z-index: 999;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: 300px;
+        height: 130px;
+        background-color: #333;
+        border-radius: 10px;
+
+        .exit-message{
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            padding-top: 20px; padding-left: 10px;
+        }
+
+        .yes-no-buttons{
+            position: absolute;
+            display: flex;
+            column-gap: 10px;
+            flex-direction: row;
+            bottom: 10px; right: 10px;
+
+            .button-wrapper{
+                position: relative;
+
+                button{
+                    cursor: pointer;
+                    width: 70px; height: 30px;
+                    color: white;
+                    font-size: 1.5em;
+                    font-weight: bold;
+                    border: none;
+                    &:active{transform: translateX(-2px) translateY(-2px);}
+                }
+
+                .exit-yes{
+                    background-color: rgb(0, 130, 0);
+                }
+                
+                .exit-no{
+                    background-color: rgb(130, 0, 0);
+                }
+
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: -4px;
+                    left: -4px;
+                    width: 70px;
+                    height: 30px;
+                    background-color: var(--timberwolf);
+                    z-index: -1;
+                }
+
+            }
+        }
+    }
+}
+
 
 .game-controls{
     position: fixed;
