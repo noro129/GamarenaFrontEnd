@@ -1,0 +1,30 @@
+<div class="instructions-exit">
+    <span class="button-wrapper">
+        <button class="instructions" (click)="showInstructionsList()">i</button>
+    </span>
+    <span class="button-wrapper">
+        <button class="exit" (click)="exit()">X</button>
+    </span>
+</div>
+
+
+<div class="instructions-list" *ngIf="showInstructions">
+    <span class="button-wrapper">
+        <button class="close-instructions" (click)="hideInstructions()">close</button>
+    </span>
+</div>
+
+
+
+<div class="game-controls">
+    <span class="button-wrapper" *ngIf="!gameStarted">
+        <button class="start-game" (click)="startGame()">Start</button>
+    </span>
+    <span class="button-wrapper" *ngIf="gameStarted">
+        <button class="stop-resume-game" *ngIf="gameStopped" (click)="StopResumeGame()">Resume</button>
+        <button class="stop-resume-game" *ngIf="!gameStopped" (click)="StopResumeGame()">Stop</button>
+    </span>
+    <span class="button-wrapper" *ngIf="numberOfHintsLeft != 0">
+        <button class="show-hint" [attr.remaining-hints]="numberOfHintsLeft" (click)="showHint()">Hints</button>
+    </span>
+</div>

@@ -7,30 +7,15 @@
     justify-content: center;
     align-items: center;
 
-    button {
-        position: absolute;
-        background-color: var(--color-2);
-        color: white;
-        border: unset;
-        width: 50px;
-        height: 50px;
-        font-size: 2.5em;
-        font-weight: bolder;
-        top: 5px;
-        cursor: pointer;
-    }
-
     .instructions{
-        box-shadow: 0 0 4px 4px black;
-        opacity: .6;
         border-radius: 100%;
-        left: 5px;
+        right: 60px;
     }
 
     .exit{
-        box-shadow: 0 0 2px 2px black;
         right: 5px;
     }
+
 
     .game{
         max-width: fit-content;
