@@ -28,7 +28,10 @@
 </div>
 
 
-<div class="game-controls">
+<div class="game-controls" [ngClass]="{'hide-controls' : hideControls}">
+    <span class="button-wrapper">
+        <button class="hide-controls-section" (click)="showHideControlsSection()">{{controlsVisibilityButton}}</button>
+    </span>
     <span class="button-wrapper" *ngIf="!gameStarted">
         <button class="start-game" (click)="startGame()">Start</button>
     </span>
