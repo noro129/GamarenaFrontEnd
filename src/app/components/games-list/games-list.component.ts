@@ -27,10 +27,10 @@ export class GamesListComponent {
       isGameLiked: false
     },
     {
-      gameName: 'Sudoku',
+      gameName: 'Twins-Hunt',
       gameLikesNumber: 5678,
-      gamePlayersNumber: 8000,
-      gameDescription: 'A logic-based number puzzle where you fill a 9x9 grid with numbers from 1 to 9.',
+      gamePlayersNumber: 3201,
+      gameDescription: '.....',
       isGameLiked: false
     },
     {
@@ -38,7 +38,7 @@ export class GamesListComponent {
       gameLikesNumber: 5678,
       gamePlayersNumber: 8000,
       gameDescription: 'A logic-based number puzzle where you fill a 9x9 grid with numbers from 1 to 9.',
-      isGameLiked: false
+      isGameLiked: true
     },
     {
       gameName: 'Sudoku',

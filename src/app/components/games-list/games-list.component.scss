@@ -6,9 +6,10 @@
     border-bottom: 4px solid var(--rich-black);
     border-left: 4px solid white;
     border-right: 4px solid var(--rich-black);
-    padding: 20px;
+    padding: 50px 0;
     display: flex;
-    row-gap: 20px;
+    flex-direction: row;
+    row-gap: 50px;
     column-gap: 20px;
     flex-wrap: wrap;
     align-items: center;
@@ -16,8 +17,7 @@
     background-color: var(--timberwolf);
 
     >*{
-        
-        width: 25%;
-        height: max-content;
+        width: fit-content;
+        height: fit-content;
     }
 }
