@@ -110,6 +110,7 @@ export class WorduessComponent {
       if(this.attemptsValidation[this.currentAttempt][i]==1) continue;
       else{
         this.attemptsValidation[this.currentAttempt][i] = letterCount[this.currentWord.charAt(i)] >0 ? -2 : -1;
+        letterCount[this.currentWord.charAt(i)] = letterCount[this.currentWord.charAt(i)]-1;
         this.currentWord = this.currentWord.substring(0, i) + ' ' + this.currentWord.substring(i+1, 5);
       }
     }
