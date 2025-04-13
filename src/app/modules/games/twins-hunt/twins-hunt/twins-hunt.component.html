@@ -1,1 +1,13 @@
-<p>twins-hunt works!</p>
+<div class="container">
+    <div class="game" #matrix>
+        <div class="row" *ngFor="let i of indexesArray(rows);">
+            <div *ngFor="let j of indexesArray(columns);"
+            class="row-cell"
+            (click)="cellClick(i, j)"></div>
+        </div>
+    </div>
+</div>
+
+<app-timer [startTimer]="startGame" [stopTimer]="gameSolved"></app-timer>
+<app-game-toolbar (gameStartedEvent)="handleGameStart($event)" [numberOfHintsLeft]="4"/>
+<app-game-result [isVisible]="colorsMatched == (rows*columns)/2"/>
