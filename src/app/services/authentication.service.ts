@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { SignIn } from '../models/SignIn';
 import { SignUp } from '../models/SignUp';
 import { Token } from '../models/token';
-import { catchError, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

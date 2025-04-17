@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavBarComponent } from "../nav-bar/nav-bar.component";
 import { NgFor } from '@angular/common';
 import { GameItemComponent } from "../game-item/game-item.component";
+import { Game } from '../../models/game';
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-games-list',
@@ -9,52 +11,22 @@ import { GameItemComponent } from "../game-item/game-item.component";
   templateUrl: './games-list.component.html',
   styleUrl: './games-list.component.scss'
 })
-export class GamesListComponent {
+export class GamesListComponent implements OnInit {
   gameLogosPath = 'gameLogo/';
-  gamesList= [
-    {
-      gameName: 'Worduess',
-      gameLikesNumber: 1245,
-      gamePlayersNumber: 10000,
-      gameDescription: 'A daily word guessing game where you have six chances to guess the five-letter word.',
-      isGameLiked: true
-    },
-    {
-      gameName: 'Sudoku',
-      gameLikesNumber: 5678,
-      gamePlayersNumber: 8000,
-      gameDescription: 'A logic-based number puzzle where you fill a 9x9 grid with numbers from 1 to 9.',
-      isGameLiked: false
-    },
-    {
-      gameName: 'Twins-Hunt',
-      gameLikesNumber: 5678,
-      gamePlayersNumber: 3201,
-      gameDescription: '.....',
-      isGameLiked: false
-    },
-    {
-      gameName: 'Sudoku',
-      gameLikesNumber: 5678,
-      gamePlayersNumber: 8000,
-      gameDescription: 'A logic-based number puzzle where you fill a 9x9 grid with numbers from 1 to 9.',
-      isGameLiked: true
-    },
-    {
-      gameName: 'Sudoku',
-      gameLikesNumber: 5678,
-      gamePlayersNumber: 8000,
-      gameDescription: 'A logic-based number puzzle where you fill a 9x9 grid with numbers from 1 to 9.',
-      isGameLiked: false
-    },
-    {
-      gameName: 'Sudoku',
-      gameLikesNumber: 5678,
-      gamePlayersNumber: 8000,
-      gameDescription: 'A logic-based number puzzle where you fill a 9x9 grid with numbers from 1 to 9.',
-      isGameLiked: false
-    }
-  ];
 
+  gamesList!: Game[];
+
+  constructor(private gameService : GameService) {}
+
+  ngOnInit(): void {
+    this.gameService.getGames().subscribe({
+      next: (response) => {
+        this.gamesList = response;
+      },
+      error: (err)=> {
+        console.log(err);
+      }
+    })
+  }
 
 }
