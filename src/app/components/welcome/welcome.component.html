@@ -13,15 +13,15 @@
         </div>
     </div>
     <div class="form-container" *ngIf="isSignin || isSignup">
-        <form *ngIf="isSignin" id="signin">
+        <form *ngIf="isSignin" id="signin" (ngSubmit)="enter(signinData)">
             <input type="text" [(ngModel)]="signinData.username" name="username" id="username" (focus)="onFocus('username')" (blur)="onBlur('username')" required/>
             <label for="username" [ngClass]="{'focused' : this.focused.username || signinData.username !== ''}">Username</label>
             <input type="password" [(ngModel)]="signinData.password" name="password" id="password" (focus)="onFocus('password')" (blur)="onBlur('password')"  required/>
             <label for="password" [ngClass]="{'focused' : this.focused.password || signinData.password !== ''}">Password</label>
-            <button type="submit" routerLink="/games-list">Enter</button>
+            <button [disabled]="signinData.password === '' || signinData.username === ''" type="submit" [ngClass]="{'disable' : signinData.password === '' || signinData.username === ''}">Enter</button>
         </form>
 
-        <form *ngIf="isSignup" id="signup">
+        <form *ngIf="isSignup" id="signup" (ngSubmit)="register(signupData)">
             <input type="email" [(ngModel)]="signupData.email" name="email" id="email" (focus)="onFocus('email')" (blur)="onBlur('email')" required/>
             <label for="email" [ngClass]="{'focused' : this.focused.email || signupData.email !== ''}">Email</label>
             <input type="text" [(ngModel)]="signupData.username" name="username" id="username" (focus)="onFocus('username')" (blur)="onBlur('username')"  required/>
@@ -30,7 +30,7 @@
             <label for="password" [ngClass]="{'focused' : this.focused.password || signupData.password !== ''}">Password</label>
             <input type="date" [(ngModel)]="signupData.birth_date" name="birth_date" id="birth_date" (focus)="onFocus('birth_date')" (blur)="onBlur('birth_date')"  required/>
             <label for="birth_date" [ngClass]="{'focused' : this.focused.birth_date || signupData.birth_date !== ''}">Date of birth</label>
-            <button type="submit" routerLink="/games-list">Register</button>
+            <button [disabled]="signupData.password === '' || signupData.username === '' || signupData.email === '' || signupData.birth_date === ''" type="submit" [ngClass]="{'disable' : signupData.password === '' || signupData.username === '' || signupData.email === '' || signupData.birth_date === ''}">Register</button>
         </form>
     </div>
 </main>
