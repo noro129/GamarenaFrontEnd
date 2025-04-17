@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,4 +9,11 @@ import { RouterLink } from '@angular/router';
 })
 export class NavBarComponent {
 
+  constructor(private router : Router) {}
+
+
+  logout() {
+    localStorage.removeItem("token");
+    this.router.navigate(["/"]);
+  }
 }
