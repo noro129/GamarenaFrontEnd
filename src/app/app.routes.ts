@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { GamesListComponent } from './components/games-list/games-list.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
     {
@@ -11,24 +12,28 @@ export const routes: Routes = [
     {
         path : 'games-list',
         pathMatch : 'full',
-        component : GamesListComponent
+        component : GamesListComponent,
+        canActivate: [authGuard]
     },
     {
         path : 'game/worduess',
         pathMatch : 'full',
         loadChildren : () => 
-            import('./modules/games/worduess/worduess.module').then(m => m.WorduessModule)
+            import('./modules/games/worduess/worduess.module').then(m => m.WorduessModule),
+        canActivate: [authGuard]
     },
     {
         path : 'game/sudoku',
         pathMatch : 'full',
         loadChildren : () => 
-            import('./modules/games/sudoku/sudoku.module').then(m => m.SudokuModule)
+            import('./modules/games/sudoku/sudoku.module').then(m => m.SudokuModule),
+        canActivate: [authGuard]
     },
     {
         path : 'game/twins-hunt',
         pathMatch : 'full',
         loadChildren : () => 
-            import('./modules/games/twins-hunt/twins-hunt.module').then(m => m.TwinsHuntModule)
+            import('./modules/games/twins-hunt/twins-hunt.module').then(m => m.TwinsHuntModule),
+        canActivate: [authGuard]
     }
 ];
