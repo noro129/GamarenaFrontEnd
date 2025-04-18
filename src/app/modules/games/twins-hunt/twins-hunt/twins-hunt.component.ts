@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild, ViewChildren } fro
 import { TimerComponent } from '../../../../components/timer/timer.component';
 import { GameToolbarComponent } from '../../../../components/game-toolbar/game-toolbar.component';
 import { GameResultComponent } from '../../../../components/game-result/game-result.component';
+import { TwinsHuntService } from '../twins-hunt.service';
 
 @Component({
   selector: 'app-twins-hunt',
@@ -10,19 +11,12 @@ import { GameResultComponent } from '../../../../components/game-result/game-res
   templateUrl: './twins-hunt.component.html',
   styleUrl: './twins-hunt.component.scss'
 })
-export class TwinsHuntComponent{
+export class TwinsHuntComponent implements OnInit{
   @ViewChild('matrix') matrix!: ElementRef;
 
 
 
-  colorsMatrix : string[][] = [
-  ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF"],
-  ["#FF8000", "#8000FF", "#750955", "#00FF80", "#FF0080", "#808080"],
-  ["#804000", "#FF8080", "#FFFF80", "#80FF80", "#8080FF", "#000000"],
-  ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF"],
-  ["#FF8000", "#8000FF", "#750955", "#00FF80", "#FF0080", "#808080"],
-  ["#804000", "#FF8080", "#FFFF80", "#80FF80", "#8080FF", "#000000"]
-  ];
+  colorsMatrix! : string[][];
   rows = 6;
   columns = 6;
   startGame = false;
@@ -32,7 +26,19 @@ export class TwinsHuntComponent{
   colorTwin1 = [-1, -1];
   colorTwin2 = [-1, -1];
 
-  constructor(private renderer : Renderer2) {}
+  constructor(private renderer : Renderer2, private twinshuntService : TwinsHuntService) {}
+
+  ngOnInit(): void {
+    this.twinshuntService.initializeGame(this.rows, this.columns).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.colorsMatrix = response;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
 
   
   handleGameStart(event : boolean) {
@@ -69,6 +75,7 @@ export class TwinsHuntComponent{
       this.colorTwin1 = [i, j];
       this.renderer.addClass(this.matrix.nativeElement.querySelectorAll(".row-cell")[i*this.rows + j], 'show-cell');
     } else {
+      if (i == this.colorTwin1[0] && j==this.colorTwin1[1]) return;
       this.colorTwin2 = [i, j];
       this.renderer.addClass(this.matrix.nativeElement.querySelectorAll(".row-cell")[i*this.rows + j], 'show-cell');
 
