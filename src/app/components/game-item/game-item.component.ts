@@ -1,6 +1,7 @@
 import { LowerCasePipe, NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-game-item',
@@ -19,9 +20,11 @@ export class GameItemComponent {
   hoverEffect = false;
   likeButtonPressed = false;
 
+  constructor(private gameService : GameService) {}
 
   likePressed() {
     this.isGameLiked = !this.isGameLiked;
+    this.gameService.gameReaction(this.gameName, this.isGameLiked).subscribe();
     if (this.isGameLiked) this.likeButtonPressed = true;
     else this.likeButtonPressed = false;
   }

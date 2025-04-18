@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Game } from '../models/game';
@@ -15,5 +15,11 @@ export class GameService {
 
   getGames() : Observable<Game[]> {
     return this.http.get<Game[]>(this.URL+"/all");
+  }
+
+  gameReaction(gameName : string, liked : boolean) : Observable<boolean> {
+    const params = new HttpParams().set("gameName", gameName);
+    if (liked) return this.http.post<boolean>(this.URL+"/like", null, {params});
+    else return this.http.post<boolean>(this.URL+"/dislike", null, {params});
   }
 }

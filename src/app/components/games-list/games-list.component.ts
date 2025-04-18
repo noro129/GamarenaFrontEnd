@@ -21,12 +21,14 @@ export class GamesListComponent implements OnInit {
   ngOnInit(): void {
     this.gameService.getGames().subscribe({
       next: (response) => {
+        console.log(response);
         this.gamesList = response;
       },
       error: (err)=> {
         console.log(err);
       }
     })
+    this.gamesList = [];
   }
 
 }
