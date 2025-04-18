@@ -132,10 +132,25 @@
             height: 100%;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
+        &::after{
+            content: attr(count);
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: fit-content;
+            font-weight: bolder;
+            font-size: 1.2em;
+            color: rgb(255, 100, 100);
+            transform: translateY(50%) translateX(-50%);
+        }
     }
     
     .not-liked {
         filter: grayscale(100%);
+        &::after{
+            color: black;
+        }
         
     }
 
@@ -150,7 +165,7 @@
     .not-liked-pressed{
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
                     filter .2s ease;
-        transform: scale(.9);
+        
     }
 }
 

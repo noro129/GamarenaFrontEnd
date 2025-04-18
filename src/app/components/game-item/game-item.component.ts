@@ -25,8 +25,14 @@ export class GameItemComponent {
   likePressed() {
     this.isGameLiked = !this.isGameLiked;
     this.gameService.gameReaction(this.gameName, this.isGameLiked).subscribe();
-    if (this.isGameLiked) this.likeButtonPressed = true;
-    else this.likeButtonPressed = false;
+    if (this.isGameLiked) {
+      this.likeButtonPressed = true;
+      this.gameLikesNumber++;
+    }
+    else {
+      this.likeButtonPressed = false;
+      this.gameLikesNumber--;
+    }
   }
   getGameImage(gameName: string) : string {
     switch (gameName.toLowerCase()) {

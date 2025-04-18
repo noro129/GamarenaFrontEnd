@@ -4,6 +4,6 @@
     
         <h3 class="game-name">{{gameName}}</h3>
         <div class="game-players-number">{{gamePlayersNumber}}</div>
-        <button class="like-button" (click)="likePressed()" [ngClass]="{'not-liked' : !isGameLiked, 'like-button-pressed' : likeButtonPressed, 'not-liked-pressed' : !likeButtonPressed}"><img src="icon/heart.png" alt="heart icon"></button>
+        <button [attr.count]="gameLikesNumber" class="like-button" (click)="likePressed()" [ngClass]="{'not-liked' : !isGameLiked, 'like-button-pressed' : likeButtonPressed, 'not-liked-pressed' : !likeButtonPressed}"><img src="icon/heart.png" alt="heart icon"></button>
     
 </div>
