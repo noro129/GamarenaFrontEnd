@@ -1,9 +1,7 @@
 <div class="game-container" (mouseenter)="triggerHoverEffect(true)" (mouseleave)="triggerHoverEffect(false)">
     <img src="{{getGameImage(gameName)}}" alt="{{getGameImage(gameName)}}" class="game-image">
     <button class="goToGame" routerLink="/game/{{gameName | lowercase}}">&gt;</button>
-    
         <h3 class="game-name">{{gameName}}</h3>
-        <div class="game-players-number">{{gamePlayersNumber}}</div>
+        <div class="game-players-number">{{gamePlayersNumber}}<span *ngIf="gamePlayersNumber==1;"> player</span><span *ngIf="gamePlayersNumber!=1"> players</span></div>
         <button [attr.count]="gameLikesNumber" class="like-button" (click)="likePressed()" [ngClass]="{'not-liked' : !isGameLiked, 'like-button-pressed' : likeButtonPressed, 'not-liked-pressed' : !likeButtonPressed}"><img src="icon/heart.png" alt="heart icon"></button>
-    
 </div>

@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './sudoku.component.scss'
 })
 export class SudokuComponent {
+  gameName = "Sudoku";
 
 }

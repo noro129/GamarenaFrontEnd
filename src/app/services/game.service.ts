@@ -22,4 +22,9 @@ export class GameService {
     if (liked) return this.http.post<boolean>(this.URL+"/like", null, {params});
     else return this.http.post<boolean>(this.URL+"/dislike", null, {params});
   }
+
+  startGame(gameName: string) : Observable<boolean> {
+    const params = new HttpParams().set("gameName", gameName);
+    return this.http.post<boolean>(this.URL+"/start",null, {params})
+  }
 }

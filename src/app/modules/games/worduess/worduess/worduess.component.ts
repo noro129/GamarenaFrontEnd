@@ -11,6 +11,7 @@ import { GameResultComponent } from "../../../../components/game-result/game-res
   styleUrl: './worduess.component.scss'
 })
 export class WorduessComponent {
+  gameName = "Worduess";
   wordsList: string[] = ["ALBUM",
     "GIANT",
     "GREAT",

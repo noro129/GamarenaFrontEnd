@@ -13,5 +13,5 @@
     </div>
 </div>
 <app-timer [startTimer]="startGame" [stopTimer]="gameSolved"></app-timer>
-<app-game-toolbar (gameStartedEvent)="handleGameStart($event)"/>
+<app-game-toolbar [gameName]="gameName" (gameStartedEvent)="handleGameStart($event)"/>
 <app-game-result [isVisible]="gameSolved"/>

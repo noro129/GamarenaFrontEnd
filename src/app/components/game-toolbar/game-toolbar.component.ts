@@ -1,6 +1,7 @@
 import { NgClass, NgIf } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-game-toolbar',
@@ -11,6 +12,7 @@ import { RouterLink } from '@angular/router';
 export class GameToolbarComponent {
   showInstructions = false;
   @Input() numberOfHintsLeft = 2;
+  @Input() gameName!: string;
   @Output() gameStartedEvent = new EventEmitter<boolean>();
   gameStarted = false;
   gameStopped = false;
@@ -18,6 +20,8 @@ export class GameToolbarComponent {
   controlsVisibilityButton = '<<';
 
   exitGameDialogueShown = false;
+
+  constructor(private gameService : GameService) {}
 
 
   showInstructionsList() {this.showInstructions=true;}
@@ -27,6 +31,14 @@ export class GameToolbarComponent {
   showHint() {this.numberOfHintsLeft--;}
   startGame() {
     this.gameStarted=true;
+    this.gameService.startGame(this.gameName).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
     this.gameStartedEvent.emit(true);
   }
   StopResumeGame() {

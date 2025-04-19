@@ -19,9 +19,6 @@
         .game-players-number{
             transform: translateY(100%);
         }
-        .game-name{
-            transform: translateY(-100%);
-        }
 
     }
 
@@ -55,9 +52,8 @@
         width: 50px;
         height: 50px;
         padding: 0;
-        background-color: transparent;
         color: white;
-        background-color: var(--rich-black);
+        background: linear-gradient(45deg, var(--color-2) 50%, var(--rich-black) 50%);
         position: absolute;
         top: 0;
         right: 0;
@@ -69,23 +65,26 @@
     }
 
     .game-name {
-        font-size: 2em;
+        font-size: 22px;
         font-weight: bolder;
         letter-spacing: 2px;
-        width: max-content;
+        width: fit-content;
         position: absolute;
-        top: 0;
-        left: 20px;
-        padding: 0 10px;
+        top: 50%;
+        left: 75px;
+        transform: translateY(-50%);
+        padding: 0 5px;
         transition: all .2s ease-in-out;
-        z-index: 9;
+        z-index: 999;
+        color: black;
 
         &::after, &::before{
             z-index: -3;
             content: '';
             display: block;
-            height: 100%;
+            height: 10%;
             position: absolute;
+            opacity: .7;
         }
 
         &::before {
@@ -105,9 +104,11 @@
         position: absolute;
         bottom: 0;
         right: 0;
+        font-family: sans-serif;
+        padding: 2px;
         padding-right: 5px;
         padding-left: 2px;
-        background-color: var(--color-2);
+        background: linear-gradient(45deg, var(--rich-black) 50%, var(--color-2) 50%);
         transition: transform .1s linear;
         z-index: 9;
     }

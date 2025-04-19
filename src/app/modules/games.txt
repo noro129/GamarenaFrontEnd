@@ -1,7 +1,0 @@
-worduess wordle
-sudoku
-Twins Hunt - Memory Matching Game color matching
-2048
-Minesweeper
-
-snake

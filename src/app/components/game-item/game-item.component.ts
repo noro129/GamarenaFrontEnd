@@ -1,11 +1,11 @@
-import { LowerCasePipe, NgClass } from '@angular/common';
+import { LowerCasePipe, NgClass, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-game-item',
-  imports: [NgClass, RouterLink, LowerCasePipe],
+  imports: [NgIf, NgClass, RouterLink, LowerCasePipe],
   templateUrl: './game-item.component.html',
   styleUrl: './game-item.component.scss'
 })

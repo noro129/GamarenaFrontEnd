@@ -20,6 +20,7 @@ export class TwinsHuntComponent implements OnInit{
   rows = 6;
   columns = 6;
   startGame = false;
+  gameName = "Twins-Hunt";
   gameSolved = false;
   showCells = false;
   colorsMatched = 0;
