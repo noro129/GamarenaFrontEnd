@@ -10,8 +10,6 @@
     color: white;
 
     &:hover{
-        animation: shake .3s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
-
         .goToGame{
             transform: translateY(-100%) rotateZ(-90deg);
         }
@@ -19,7 +17,6 @@
         .game-players-number{
             transform: translateY(100%);
         }
-
     }
 
     &::after {
@@ -32,7 +29,7 @@
         height: 100%;
         border-top-left-radius: 30px;
         border-bottom-left-radius: 30px;
-        background: linear-gradient(to left, var(--battleship-gray), var(--timberwolf) 40%);
+        background: linear-gradient(to left, #333, var(--timberwolf) 70%);
     }
 
     .game-image{
@@ -119,7 +116,7 @@
         position: absolute;
         padding: 4px;
         right: 5px;
-        top: 8px;
+        top: 2px;
         width: 60px;
         height: 60px;
         margin: 0;
@@ -150,7 +147,7 @@
     .not-liked {
         filter: grayscale(100%);
         &::after{
-            color: black;
+            color: white;
         }
         
     }
@@ -175,12 +172,4 @@
     25%  { transform: scale(0.8); filter: grayscale(100%); }
     50%  { transform: scale(1.2); }
     100% { transform: scale(1); }
-}
-
-@keyframes shake {
-    0%   { transform: rotateZ(0deg); }
-    25%  { transform: rotateZ(-5deg); }
-    50%  { transform: rotateZ(5deg); }
-    75%  { transform: rotateZ(-5deg); }
-    100% { transform: rotateZ(0deg); }
 }
