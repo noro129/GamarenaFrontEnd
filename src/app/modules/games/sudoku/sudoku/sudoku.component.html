@@ -1,1 +1,15 @@
-<p>soduko works!</p>
+<div class="container">
+    <div class="game">
+        <div class="block" *ngFor="let block of indexesArray(blocks)" [ngClass]="{'valid-block' : validateBlocks[block]}">
+            <div class="cell" *ngFor="let cell of indexesArray(cells)" [attr.fixValue]="sudokuToSolve[block][cell]" [attr.triedValue]="attempt[block][cell]" [ngClass]="{'clicked-cell' : coordinates[0]==block && coordinates[1]==cell, 'clickable-cell' : sudokuToSolve[block][cell] === '', 'fixed-cell' : sudokuToSolve[block][cell] !== '', 'attempt-cell' : attempt[block][cell] !== ''}" (click)="clickCell(block, cell)">
+                <div class="sub-cell" *ngFor="let subCell of indexesArray(subCells)"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="buttons">
+    <span class="button-wrapper"><button class="place" [ngClass]="{'chosen-mode' : placeMode}" (click)="buttonClick(true)">Place</button></span>
+    <span class="button-wrapper"><button class="pencil" [ngClass]="{'chosen-mode' : pencilMode}" (click)="buttonClick(false)">Pencil</button></span>
+    <span class="button-wrapper"><button class="restart" (click)="restartGame()">Restart</button></span>
+</div>

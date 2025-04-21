@@ -10,6 +10,11 @@
     color: white;
 
     &:hover{
+
+        &::after{
+            background: var(--timberwolf);
+        }
+
         .goToGame{
             transform: translateY(-100%) rotateZ(-90deg);
         }
@@ -30,6 +35,7 @@
         border-top-left-radius: 30px;
         border-bottom-left-radius: 30px;
         background: linear-gradient(to left, #333, var(--timberwolf) 70%);
+        
     }
 
     .game-image{
