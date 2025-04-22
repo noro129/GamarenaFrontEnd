@@ -15,6 +15,7 @@ export class SudokuComponent implements OnInit {
   coordinates = [-1,-1];
   sudokuToSolve!: string[][];
   attempt!: string[][];
+  guesses!: string[][][];
   validateBlocks = [false, false, false, 
                     false, false, false, 
                     false, false, false];
@@ -44,8 +45,8 @@ export class SudokuComponent implements OnInit {
       }
     }
 
-    this.sudokuToSolve[0][1] = '1';
-    this.attempt[0][0] = '3';
+    this.sudokuToSolve[0][1] = '2';
+    this.sudokuToSolve[1][6] = '1';
   }
 
   indexesArray(size : number) : number[] {
@@ -61,10 +62,14 @@ export class SudokuComponent implements OnInit {
   keyEvent(event: KeyboardEvent) {
     if(this.coordinates[0] == -1) return;
     if(/^[1-9]$/.test(event.key)) {
-      this.attempt[this.coordinates[0]][this.coordinates[1]] = event.key;
-      this.checkRow(Math.floor(this.coordinates[0]/3) * 3 + Math.floor(this.coordinates[1] / 3));
-      this.checkColumn(Math.floor(this.coordinates[0]%3) * 3 + this.coordinates[1] % 3);
-      this.checkBlock(this.coordinates[0]);
+      if (this.placeMode) {
+        this.attempt[this.coordinates[0]][this.coordinates[1]] = event.key;
+        this.checkRow(this.coordinates[0], this.coordinates[1]);
+        this.checkColumn(this.coordinates[0], this.coordinates[1]);
+        this.checkBlock(this.coordinates[0]);
+      } else {
+
+      }
     } else if(event.key === "ArrowUp") {
       this.upKey();
     } else if(event.key === "ArrowDown") {
@@ -75,6 +80,9 @@ export class SudokuComponent implements OnInit {
       this.rightKey();
     } else if(event.key === "Backspace") {
       this.attempt[this.coordinates[0]][this.coordinates[1]] = '';
+      this.validateBlocks[this.coordinates[0]] = false;
+      this.validateColumns[this.getColumn(this.coordinates[0], this.coordinates[1])] = false;
+      this.validateRows[this.getRow(this.coordinates[0], this.coordinates[1])] = false;
     }
   }
 
@@ -123,21 +131,69 @@ export class SudokuComponent implements OnInit {
     if(this.sudokuToSolve[this.coordinates[0]][this.coordinates[1]] !== '') this.rightKey();
   }
 
-  checkRow(row : number){ console.log("checking row: "+row)}
+  checkRow(block : number, cell : number){
+    const row = this.getRow(this.coordinates[0], this.coordinates[1]);
+    const valuesSet = new Set<string>();
+    valuesSet.add(this.attempt[block][cell]);
+    for(let i =0; i<8; i++) {
+      if(cell%3==2) {
+        cell = cell - 2;
+        if(block%3==2) block = block - 2;
+        else block = block + 1;
+      } else cell = cell + 1;
+      if((this.attempt[block][cell]==='' && this.sudokuToSolve[block][cell]==='') || valuesSet.has(this.attempt[block][cell]) || valuesSet.has(this.sudokuToSolve[block][cell])) {
+        this.validateRows[row] = false;
+        return;
+      } else if(this.attempt[block][cell]==='') {
+        valuesSet.add(this.sudokuToSolve[block][cell]);
+      } else {
+        valuesSet.add(this.attempt[block][cell]);
+      }
+    }
+    this.validateRows[row] = true;
+  }
 
-  checkColumn(column : number){ console.log("checking column: "+column)}
+  checkColumn(block : number, cell : number){
+    const column = this.getColumn(block, cell);
+    const valuesSet = new Set<string>();
+    valuesSet.add(this.attempt[block][cell]);
+    for(let i =0; i<8; i++) {
+      if(cell>5) {
+        cell = cell - 6;
+        if(block>5) block = block - 6;
+        else block = block + 3;
+      } else cell = cell + 3;
+      if((this.attempt[block][cell]==='' && this.sudokuToSolve[block][cell]==='') || valuesSet.has(this.attempt[block][cell]) || valuesSet.has(this.sudokuToSolve[block][cell])) {
+        this.validateColumns[column] = false;
+        return;
+      } else if(this.attempt[block][cell]==='') {
+        valuesSet.add(this.sudokuToSolve[block][cell]);
+      } else {
+        valuesSet.add(this.attempt[block][cell]);
+      }
+    }
+    this.validateColumns[column] = true;
+  }
 
-  checkBlock(block : number){ 
-    console.log("checking block: "+block)
+  checkBlock(block : number){
     const valuesSet = new Set<string>();
     for(let i =0; i<9; i++) {
-      if (this.attempt[block][i] === '' || valuesSet.has(this.attempt[block][i])) {
+      if ((this.attempt[block][i] === '' && this.sudokuToSolve[block][i] === '') || valuesSet.has(this.attempt[block][i]) || valuesSet.has(this.sudokuToSolve[block][i])) {
         this.validateBlocks[block] = false;
         return;
       }
-      valuesSet.add(this.attempt[block][i]);
+      if (this.attempt[block][i] === '') valuesSet.add(this.sudokuToSolve[block][i]);
+      else valuesSet.add(this.attempt[block][i]);
     }
     this.validateBlocks[block] = true;
+  }
+
+  getRow(block : number, cell : number) : number {
+    return Math.floor(block / 3) * 3 + Math.floor(cell / 3);
+  }
+
+  getColumn(block : number, cell : number) : number{
+    return (block%3) * 3 + cell % 3;
   }
 
   buttonClick(placeModeClicked : boolean) {
@@ -147,6 +203,24 @@ export class SudokuComponent implements OnInit {
   }
 
   restartGame() {
+    this.validateBlocks = [
+                          false, false, false, 
+                          false, false, false, 
+                          false, false, false
+                          ];
+
+    this.validateRows = [
+                        false, false, false, 
+                        false, false, false, 
+                        false, false, false
+                        ];
+
+    this.validateColumns = [
+                          false, false, false, 
+                          false, false, false, 
+                          false, false, false
+                          ];
+
     this.populateAttemptMatrix();
   }
 }
