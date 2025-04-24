@@ -3,6 +3,7 @@ import { Component, HostListener, OnChanges, SimpleChanges } from '@angular/core
 import { TimerComponent } from '../../../../components/timer/timer.component';
 import { GameToolbarComponent } from "../../../../components/game-toolbar/game-toolbar.component";
 import { GameResultComponent } from "../../../../components/game-result/game-result.component";
+import { WorduessService } from '../worduess.service';
 
 @Component({
   selector: 'app-worduess',
@@ -12,24 +13,7 @@ import { GameResultComponent } from "../../../../components/game-result/game-res
 })
 export class WorduessComponent {
   gameName = "Worduess";
-  wordsList: string[] = ["ALBUM",
-    "GIANT",
-    "GREAT",
-    "STATE",
-    "WORLD",
-    "START",
-    "LOSER",
-    "READY",
-    "SORRY",
-    "ZEBRA",
-    "TIGER",
-    "RIVER",
-    "CYCLE",
-    "ABOUT",
-    "PRIZE",
-    "ADAPT",
-    "BLOCK",
-    "HUMOR"];
+
   destroyAttempt = [false, false, false, false, false];
   attempts: string[][];
   attemptsValidation: number[][];
@@ -43,15 +27,14 @@ export class WorduessComponent {
 
   gameSolved = false;
 
-  constructor() {
+  constructor(private worduessService : WorduessService) {
     this.attempts = [];
     this.attemptsValidation = [];
     this.constructGame();
   }
 
   constructGame() {
-    this.wordToGuess = this.getRandomWord();
-    console.log("correct word: "+this.wordToGuess);
+    this.getRandomWord();
     this.attempts = [];
     this.attemptsValidation = [];
 
@@ -63,7 +46,7 @@ export class WorduessComponent {
             this.attemptsValidation[i][j] = 0;
         }
     }
-
+    
   }
 
 
@@ -134,7 +117,15 @@ export class WorduessComponent {
 
 
   getRandomWord() {
-    return this.wordsList[Math.floor(Math.random()*this.wordsList.length)];
+    this.worduessService.getRandom5lengthWord().subscribe({
+      next: (response) => {
+        this.wordToGuess = response;
+        console.log("return word: "+this.wordToGuess);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 
   getLetterCount(str: string): Record<string, number> {
