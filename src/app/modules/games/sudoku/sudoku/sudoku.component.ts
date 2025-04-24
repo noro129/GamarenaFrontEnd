@@ -1,5 +1,6 @@
 import { NgClass, NgFor } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
+import { SudokuService } from '../sudoku.service';
 
 @Component({
   selector: 'app-soduko',
@@ -27,26 +28,38 @@ export class SudokuComponent implements OnInit {
                      false, false, false];
   placeMode = true;
   pencilMode = false;
+
+  constructor(private sudokuService : SudokuService) {
+    
+  }
   
   ngOnInit(): void {
-    this.populateAttemptMatrix();
+    this.sudokuService.initializeGame().subscribe({
+      next: (response) => {
+        this.sudokuToSolve = response;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+
+    this.populateAttemptAndGuessesMatrix();
   }
 
-  populateAttemptMatrix() {
+  populateAttemptAndGuessesMatrix() {
     this.attempt = [];
-    this.sudokuToSolve = [];
+    this.guesses = [];
 
     for(let block=0; block<this.blocks; block++) {
-      this.sudokuToSolve[block] = [];
       this.attempt[block] = [];
+      this.guesses[block] = [];
       for(let cell=0; cell<this.cells; cell++) {
-        this.sudokuToSolve[block][cell] = '';
         this.attempt[block][cell] = '';
+        this.guesses[block][cell] = [];
+        
       }
     }
 
-    this.sudokuToSolve[0][1] = '2';
-    this.sudokuToSolve[1][6] = '1';
   }
 
   indexesArray(size : number) : number[] {
@@ -64,11 +77,13 @@ export class SudokuComponent implements OnInit {
     if(/^[1-9]$/.test(event.key)) {
       if (this.placeMode) {
         this.attempt[this.coordinates[0]][this.coordinates[1]] = event.key;
+        this.guesses[this.coordinates[0]][this.coordinates[1]].length = 0;
         this.checkRow(this.coordinates[0], this.coordinates[1]);
         this.checkColumn(this.coordinates[0], this.coordinates[1]);
         this.checkBlock(this.coordinates[0]);
       } else {
-
+        if (this.attempt[this.coordinates[0]][this.coordinates[1]] !== '') this.addGuess(this.coordinates[0], this.coordinates[1], this.attempt[this.coordinates[0]][this.coordinates[1]]);
+        this.addGuess(this.coordinates[0], this.coordinates[1], event.key);
       }
     } else if(event.key === "ArrowUp") {
       this.upKey();
@@ -196,6 +211,14 @@ export class SudokuComponent implements OnInit {
     return (block%3) * 3 + cell % 3;
   }
 
+  addGuess(block : number, cell : number, guess : string) {
+    if(this.guesses[block][cell].length == 9) return;
+    for(let index=0; index<this.guesses[block][cell].length; index++) {
+      if (this.guesses[block][cell][index] === guess) return;
+    }
+    this.guesses[block][cell].push(guess);
+  }
+
   buttonClick(placeModeClicked : boolean) {
     if ((placeModeClicked && this.placeMode) || (!placeModeClicked && this.pencilMode)) return;
     this.placeMode = !this.placeMode;
@@ -221,6 +244,6 @@ export class SudokuComponent implements OnInit {
                           false, false, false
                           ];
 
-    this.populateAttemptMatrix();
+    this.populateAttemptAndGuessesMatrix();
   }
 }

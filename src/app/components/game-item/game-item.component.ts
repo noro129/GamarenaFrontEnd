@@ -38,7 +38,7 @@ export class GameItemComponent {
     switch (gameName.toLowerCase()) {
       case 'worduess' : return 'gamesLogo/worduess.png';
       case 'sudoku' : return 'gamesLogo/sudoku.png';
-      case 'twinHunt' : return 'gamesLogo/twinHunt.png';
+      case 'twins-hunt' : return 'gamesLogo/twins-hunt.png';
       case '2048' : return 'gamesLogo/2048.png';
       default : return '';
     }
