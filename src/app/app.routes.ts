@@ -35,5 +35,12 @@ export const routes: Routes = [
         loadChildren : () => 
             import('./modules/games/twins-hunt/twins-hunt.module').then(m => m.TwinsHuntModule),
         canActivate: [authGuard]
+    },
+    {
+        path : 'game/minesweeper',
+        pathMatch : 'full',
+        loadChildren : () => 
+            import('./modules/games/minesweeper/minesweeper.module').then(m => m.MinesweeperModule),
+        canActivate: [authGuard]
     }
 ];

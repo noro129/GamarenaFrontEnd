@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="game">
+        <div class="screen">
+            <span *ngIf="!startGame" class="button-wrapper">
+                <button class="startGameButton" (click)="handleGameStart()">START</button>
+            </span>
+            <span *ngIf="startGame && !gameOver" class="game-screen">
+                <p class="screen-text-left">PLAY</p>
+                <img src="icon/minesweeper-HappyFace.png" alt="pixeled happy face emoji" class="screen-image-face" #faceEmoji/>
+                <p class="screen-text-right">PLAY</p>
+            </span>
+            <span *ngIf="gameOver" class="game-screen">
+                <p class="screen-text-left">DEAD</p>
+                <img src="icon/minesweeper-DeadFace.png" alt="pixeled dead face emoji" class="screen-image-face"/>
+                <p class="screen-text-right">DEAD</p>
+            </span>
+        </div>
+        <div class="buttons">
+            <span class="button-wrapper"><button class="flag" [ngClass]="{'chosen-mode' : flagMode}">flag</button></span>
+            <span class="button-wrapper"><button class="show" [ngClass]="{'chosen-mode' : showMode}">show</button></span>
+        </div>
+        <div class="mine-blocks">
+            <div class="rows" *ngFor="let row of indexesArray(rows)">
+                <div class="row-block" *ngFor="let column of indexesArray(columns)" (click)="uncoverBlock(row, column, true)" [ngClass]="{'uncover-block' : minesClicked[row][column], 'numbered-block' : minesMatrix[row][column] >0}">
+                    <img *ngIf="minesMatrix[row][column] == -1" src="icon/minesweeper-virus.png" alt="minesweeper bomb image"/>
+                    <span *ngIf="minesMatrix[row][column] > 0">{{minesMatrix[row][column]}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="game-info">
+            <p class="flagged">flags: <span class="number-wrapper">{{flaggedBlocks}}</span></p>
+            <p class="remaining-blocks">uncovered blocks: <span class="number-wrapper">{{remainingBlocks}}</span></p>
+            <p class="viruses">viruses: <span class="number-wrapper">{{virusNumber}}</span></p>
+        </div>
+    </div>
+</div>

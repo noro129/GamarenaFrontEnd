@@ -94,10 +94,15 @@ export class SudokuComponent implements OnInit {
     } else if(event.key === "ArrowRight") {
       this.rightKey();
     } else if(event.key === "Backspace") {
-      this.attempt[this.coordinates[0]][this.coordinates[1]] = '';
-      this.validateBlocks[this.coordinates[0]] = false;
-      this.validateColumns[this.getColumn(this.coordinates[0], this.coordinates[1])] = false;
-      this.validateRows[this.getRow(this.coordinates[0], this.coordinates[1])] = false;
+      if (this.placeMode) {
+        this.attempt[this.coordinates[0]][this.coordinates[1]] = '';
+        this.validateBlocks[this.coordinates[0]] = false;
+        this.validateColumns[this.getColumn(this.coordinates[0], this.coordinates[1])] = false;
+        this.validateRows[this.getRow(this.coordinates[0], this.coordinates[1])] = false;
+      } else {
+        this.guesses[this.coordinates[0]][this.coordinates[1]].pop();
+      }
+      
     }
   }
 

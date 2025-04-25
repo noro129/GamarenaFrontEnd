@@ -34,7 +34,7 @@
         height: 100%;
         border-top-left-radius: 30px;
         border-bottom-left-radius: 30px;
-        background: linear-gradient(to left, #333, var(--timberwolf) 70%);
+        background: linear-gradient(to left, #000000, var(--timberwolf) 70%);
         
     }
 
@@ -43,7 +43,6 @@
         top: 50%; left: 15px;
         transform: translateY(-50%);
         width: 60px;
-        height: 60px;
         z-index: 999;
         box-shadow: 0 0 4px black;
     }
