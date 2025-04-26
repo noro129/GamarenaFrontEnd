@@ -11,7 +11,6 @@ export class TwinsHuntService {
 
   initializeGame(rows : number, columns : number) : Observable<string[][]> {
     const params = new HttpParams().set("column" , columns).set("row", rows);
-
     return this.http.get<string[][]>(this.URL+"/generate", {params});
   }
 }

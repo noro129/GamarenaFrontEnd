@@ -1,5 +1,6 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { MinesweeperService } from '../minesweeper.service';
 
 @Component({
   selector: 'app-minesweeper',
@@ -27,27 +28,35 @@ export class MinesweeperComponent implements OnInit {
   private interval : any;
 
 
-  constructor(private renderer : Renderer2) {}
+  constructor(private minesweeperService : MinesweeperService) {
+    this.minesweeperService.initializeGame(this.rows, this.columns).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.minesMatrix = response;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
 
 
   ngOnInit(): void {
-    this.minesMatrix = [];
     this.minesClicked = [];
 
     for(let row=0; row<this.rows; row++){
-      this.minesMatrix[row] = [];
       this.minesClicked[row] = [];
       for(let column=0; column<this.columns; column++) {
-        this.minesMatrix[row][column] = 0;
         this.minesClicked[row][column] = false;
       }
     }
 
-    this.minesMatrix[1][1] = -1;
-    this.minesMatrix[3][2] = 2;
+    
+
   }
 
   handleGameStart(){
+    
     this.startGame = true;
     this.interval = setInterval(()=>{
       this.faceEmoji.nativeElement.src = "icon/minesweeper-HappyFace-closedEyes.png";
@@ -86,6 +95,10 @@ export class MinesweeperComponent implements OnInit {
       },100)
       
       
+    }
+    if(!clicked && this.minesMatrix[row][column]>0) {
+      this.minesClicked[row][column] = true;
+      this.remainingBlocks--;
     }
   }
 
