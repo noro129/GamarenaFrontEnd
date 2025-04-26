@@ -2,8 +2,21 @@
     <div class="game">
         <div class="screen">
             <span *ngIf="!startGame" class="button-wrapper">
-                <button class="startGameButton" (click)="handleGameStart()">START</button>
+                <button class="startGameButton">START</button>
             </span>
+            <span *ngIf="!startGame" class="button-wrapper">
+                <button class="startGameButton">START</button>
+            </span>
+            <span *ngIf="!startGame" class="button-wrapper">
+                <button class="startGameButton">START</button>
+            </span>
+            <span *ngIf="!startGame" class="button-wrapper">
+                <button class="startGameButton">START</button>
+            </span>
+            <span *ngIf="!startGame" class="button-wrapper">
+                <button class="startGameButton">START</button>
+            </span>
+            
             <span *ngIf="startGame && !gameOver" class="game-screen">
                 <p class="screen-text-left">PLAY</p>
                 <img src="icon/minesweeper-HappyFace.png" alt="pixeled happy face emoji" class="screen-image-face" #faceEmoji/>
@@ -11,17 +24,26 @@
             </span>
             <span *ngIf="gameOver" class="game-screen">
                 <p class="screen-text-left">DEAD</p>
-                <img src="icon/minesweeper-DeadFace.png" alt="pixeled dead face emoji" class="screen-image-face"/>
+                <img src="icon/minesweeper-DeadFace.png" alt="pixeled dead face emoji" class="screen-image-face game-lost"/>
                 <p class="screen-text-right">DEAD</p>
             </span>
         </div>
         <div class="buttons">
-            <span class="button-wrapper"><button class="flag" [ngClass]="{'chosen-mode' : flagMode}">flag</button></span>
-            <span class="button-wrapper"><button class="show" [ngClass]="{'chosen-mode' : showMode}">show</button></span>
+            <span class="button-wrapper"><button class="flag" [ngClass]="{'chosen-mode' : flagMode}" (click)="changeMode(false)">flag</button></span>
+            <span class="button-wrapper"><button class="show" [ngClass]="{'chosen-mode' : showMode}" (click)="changeMode(true)">show</button></span>
         </div>
         <div class="mine-blocks">
             <div class="rows" *ngFor="let row of indexesArray(rows)">
-                <div class="row-block" *ngFor="let column of indexesArray(columns)" (click)="uncoverBlock(row, column, true)" [ngClass]="{'uncover-block' : minesClicked[row][column], 'numbered-block' : minesMatrix[row][column] >0}">
+                <div class="row-block" *ngFor="let column of indexesArray(columns)" (click)="uncoverBlock(row, column, true)" [ngClass]="{'uncover-block' : minesClicked[row][column], 
+                'numbered-block-1' : minesMatrix[row][column] ==1,
+                'numbered-block-2' : minesMatrix[row][column] ==2,
+                'numbered-block-3' : minesMatrix[row][column] ==3,
+                'numbered-block-4' : minesMatrix[row][column] ==4,
+                'numbered-block-5' : minesMatrix[row][column] ==5,
+                'numbered-block-6' : minesMatrix[row][column] ==6,
+                'numbered-block-7' : minesMatrix[row][column] ==7,
+                'numbered-block-8' : minesMatrix[row][column] ==8,
+                'flagged' : flags[row][column]}">
                     <img *ngIf="minesMatrix[row][column] == -1" src="icon/minesweeper-virus.png" alt="minesweeper bomb image"/>
                     <span *ngIf="minesMatrix[row][column] > 0">{{minesMatrix[row][column]}}</span>
                 </div>
@@ -34,3 +56,8 @@
         </div>
     </div>
 </div>
+
+
+<app-timer [startTimer]="startGame" [stopTimer]="gameOver"></app-timer>
+<app-game-toolbar [gameName]="gameName" (gameStartedEvent)="handleGameStart($event)"/>
+<app-game-result [isVisible]="gameOver"/>
