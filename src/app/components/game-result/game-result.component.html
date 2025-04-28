@@ -1,8 +1,13 @@
 <div *ngIf="isVisible" class="overlay">
-    <div class="message-container" [ngClass]="{ 'animate-success': isSuccess, 'animate-failure': !isSuccess }">
-      <div class="confetti" *ngIf="isSuccess">🎉🎊🎉</div>
-      <h1>{{ isSuccess ? 'You Won!' : 'You Failed!' }}</h1>
-      <p>{{ isSuccess ? 'Great job solving the game!' : 'Oops! Better luck next time.' }}</p>
+  <div class="screen-container" [ngClass]="{ 'lose': !isSuccess }">
+    <div class="screen">
+      <button class="close-button" (click)="hide()">✕</button>
+      <div class="message">
+        <h1>{{ isSuccess ? 'YOU WON!' : 'YOU FAILED!' }}</h1>
+        <p>{{ isSuccess ? 'GREAT JOB SOLVING THE GAME!' : 'OOPS! BETTER LUCK NEXT TIME.' }}</p>
+      </div>
+      <button class="quit-button"  routerLink="/games-list">QUIT</button>
+      <button class="new-game-button">NEW GAME</button>
     </div>
   </div>
-  
+</div>

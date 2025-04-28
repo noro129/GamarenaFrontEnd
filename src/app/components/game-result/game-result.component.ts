@@ -1,23 +1,20 @@
 import { NgClass, NgIf } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-game-result',
-  imports: [NgClass, NgIf],
+  imports: [NgClass, NgIf, RouterLink],
   templateUrl: './game-result.component.html',
   styleUrl: './game-result.component.scss'
 })
-export class GameResultComponent implements OnChanges {
+export class GameResultComponent {
   @Input() isVisible: boolean = false;
   @Input() isSuccess: boolean = true;
 
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes['isVisible'] && changes['isVisible'].currentValue) {
-      setTimeout(()=>{
-        this.isVisible=false;
-      },1500);
-    }
+  hide() {
+    this.isVisible= false;
   }
 
 }
