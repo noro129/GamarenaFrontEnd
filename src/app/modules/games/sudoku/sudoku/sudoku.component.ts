@@ -74,6 +74,10 @@ export class SudokuComponent implements OnInit {
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     if(this.coordinates[0] == -1) return;
+    if(event.key.toUpperCase() === 'P') {
+      this.placeMode= !this.placeMode;
+      this.pencilMode= !this.pencilMode;
+    }
     if(/^[1-9]$/.test(event.key)) {
       if (this.placeMode) {
         this.attempt[this.coordinates[0]][this.coordinates[1]] = event.key;
@@ -83,6 +87,7 @@ export class SudokuComponent implements OnInit {
         this.checkBlock(this.coordinates[0]);
       } else {
         if (this.attempt[this.coordinates[0]][this.coordinates[1]] !== '') this.addGuess(this.coordinates[0], this.coordinates[1], this.attempt[this.coordinates[0]][this.coordinates[1]]);
+        this.attempt[this.coordinates[0]][this.coordinates[1]]='';
         this.addGuess(this.coordinates[0], this.coordinates[1], event.key);
       }
     } else if(event.key === "ArrowUp") {
