@@ -60,4 +60,4 @@
 
 <app-timer [startTimer]="startGame" [stopTimer]="gameOver"></app-timer>
 <app-game-toolbar [gameName]="gameName" (gameStartedEvent)="handleGameStart($event)"/>
-<app-game-result [isVisible]="gameOver"/>
+<app-game-result [isVisible]="gameOver" [isSuccess]="!gameLost"/>

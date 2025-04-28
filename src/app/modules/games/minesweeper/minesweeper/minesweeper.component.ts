@@ -15,6 +15,7 @@ export class MinesweeperComponent implements OnInit {
   gameName = "Minesweeper";
   startGame = false;
   gameOver = false;
+  gameLost = false;
 
   minesMatrix!: number[][];
   minesClicked!: boolean[][];
@@ -82,6 +83,7 @@ export class MinesweeperComponent implements OnInit {
     if (!this.startGame || this.flagMode || row<0 || row>=this.rows || column<0 || column>=this.columns || this.minesClicked[row][column] || this.flags[row][column]) return;
 
     if(clicked && this.minesMatrix[row][column]===-1) {
+      this.gameLost= true;
       this.gameOver= true;
       this.minesClicked[row][column] = true;
       clearInterval(this.interval);
@@ -107,6 +109,9 @@ export class MinesweeperComponent implements OnInit {
     if(!clicked && this.minesMatrix[row][column]>0) {
       this.minesClicked[row][column] = true;
       this.remainingBlocks--;
+      if(this.remainingBlocks == this.virusNumber) {
+        this.gameOver=true;
+      }
     }
   }
 
