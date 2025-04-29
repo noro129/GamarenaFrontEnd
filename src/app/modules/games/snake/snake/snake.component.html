@@ -1,0 +1,7 @@
+<div class="container">
+    <div class="game">
+        <div *ngFor="let x of toArray(boardX)" class="row">
+            <div *ngFor="let y of toArray(boardY)" class="block" [ngClass]="{'snake-body' : isSnakeBody(x, y), 'apple' : apple[0]===x && apple[1]===y}"></div>
+        </div>
+    </div>
+</div>

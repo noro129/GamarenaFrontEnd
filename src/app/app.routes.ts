@@ -42,5 +42,12 @@ export const routes: Routes = [
         loadChildren : () => 
             import('./modules/games/minesweeper/minesweeper.module').then(m => m.MinesweeperModule),
         canActivate: [authGuard]
+    },
+    {
+        path : 'game/snake',
+        pathMatch : 'full',
+        loadChildren : () => 
+            import('./modules/games/snake/snake.module').then(m => m.SnakeModule),
+        canActivate: [authGuard]
     }
 ];
