@@ -106,6 +106,10 @@
             }
           }
         }
+
+        .static-animation{
+          animation: tvStatic 3s linear infinite;
+        }
       }
 
       &::after{
@@ -151,4 +155,12 @@
 @keyframes jump {
   33% { transform: translateY(-4px);}
   66% { transform: translateY(4px);}
+}
+
+@keyframes tvStatic {
+  10% { transform: translateX(-4px); filter: blur(2px); }
+  14% { transform: translateX(4px); filter: blur(2px); }
+  8%, 16%, 94%, 100% { transform: translateX(0); filter: none; }
+  96% { transform: translateX(-2px); filter: blur(2px); }
+  98% { transform: translateX(6px); filter: blur(2px); }
 }

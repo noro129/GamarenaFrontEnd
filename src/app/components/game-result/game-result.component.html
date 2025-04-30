@@ -9,7 +9,7 @@
           <span *ngFor="let ch of 'WIN!'.split('')" class="character">{{ch}}</span>
         </h1>
         <h1 *ngIf="!isSuccess">YOU FAILED!</h1>
-        <p>{{ isSuccess ? 'GREAT JOB SOLVING THE GAME!' : 'OOPS! BETTER LUCK NEXT TIME.' }}</p>
+        <p [ngClass]="{'static-animation' : isSuccess}">{{ isSuccess ? 'GREAT JOB SOLVING THE GAME!' : 'OOPS! BETTER LUCK NEXT TIME.' }}</p>
       </div>
       <button class="quit-button"  routerLink="/games-list">QUIT</button>
       <button class="new-game-button">NEW GAME</button>
