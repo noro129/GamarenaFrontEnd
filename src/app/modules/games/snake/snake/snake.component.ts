@@ -1,5 +1,5 @@
 import { NgClass, NgFor } from '@angular/common';
-import { Component, Directive, HostListener, OnInit } from '@angular/core';
+import { Component, Directive, HostListener, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-snake',
@@ -7,7 +7,7 @@ import { Component, Directive, HostListener, OnInit } from '@angular/core';
   templateUrl: './snake.component.html',
   styleUrl: './snake.component.scss'
 })
-export class SnakeComponent implements OnInit{
+export class SnakeComponent implements OnInit, OnDestroy{
   boardX = 40;
   boardY = 40;
   gameStart = false;
@@ -19,6 +19,10 @@ export class SnakeComponent implements OnInit{
   ngOnInit(): void {
     this.moveSnake();
     this.putApple();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
   }
 
 

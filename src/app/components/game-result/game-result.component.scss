@@ -29,7 +29,7 @@
       width: 100%; height: 100%;
       border: 4px solid var(--vintage-green);
       box-shadow: inset 0 0 10px var(--vintage-green), 0 0 4px var(--vintage-green);
-      animation: flickerShadow 5s infinite;
+      
       
 
       .close-button, .quit-button, .new-game-button{
@@ -42,7 +42,6 @@
         text-shadow: 0 0 10px var(--vintage-green);
         font-size: 1.5em;
         position: absolute;
-        animation: flicker 5s infinite;
       }
 
       .close-button{
@@ -64,10 +63,63 @@
         position: absolute; top: 30%; left: 50%; transform: translateX(-50%);
         width: max-content;
         text-align: center;
+      }
+    }
+    
+    .lose{
+      animation: flickerShadow 5s infinite;
+
+      .close-button, .quit-button, .new-game-button{
         animation: flicker 5s infinite;
+      }
+
+      .message{
+        animation: flicker 5s infinite;
+      }
+
+      &::after{
+        content: '';
+        background-image: url("/assets/broken-glass.png");
+        position: absolute;
+        top: 4px; left: 4px; width: calc(100% - 8px); height: calc(100% - 8px);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: .5;
+        z-index: -1;
+      }
+      
+    }
+
+    .win{
+
+      .message{
+        .success{
+          .character{
+            display: inline-block;
+            animation: jump 1s steps(1) infinite;
+          }
+
+          @for $i from 1 through 7 {
+            .character:nth-of-type(#{$i}) {
+              animation-delay: calc($i * 0.2s);
+            }
+          }
+        }
+      }
+
+      &::after{
+        content: '';
+        background-color: #fff;
+        opacity: .15;
+        position: absolute;
+        top: 4px; left: 4px; width: calc(100% - 8px); height: calc(100% - 8px);
+        z-index: -1;
       }
     }
   }
+
+  
 }
 
 @keyframes flicker {
@@ -94,4 +146,9 @@
 @keyframes flickerShadow {
   12%, 28%, 40%, 68%, 84%      { box-shadow: none; }
   20%, 30%, 42%, 70%, 90% { box-shadow: inset 0 0 10px var(--vintage-green), 0 0 4px var(--vintage-green); }
+}
+
+@keyframes jump {
+  33% { transform: translateY(-4px);}
+  66% { transform: translateY(4px);}
 }

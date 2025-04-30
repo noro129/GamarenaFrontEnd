@@ -1,9 +1,14 @@
 <div *ngIf="isVisible" class="overlay">
-  <div class="screen-container" [ngClass]="{ 'lose': !isSuccess }">
-    <div class="screen">
+  <div class="screen-container">
+    <div class="screen" [ngClass]="{ 'win': isSuccess,'lose': !isSuccess }">
       <button class="close-button" (click)="hide()">✕</button>
       <div class="message">
-        <h1>{{ isSuccess ? 'YOU WON!' : 'YOU FAILED!' }}</h1>
+        <h1 *ngIf="isSuccess" class="success">
+          <span *ngFor="let ch of 'YOU'.split('')" class="character">{{ch}}</span>
+          <span>&nbsp;</span>
+          <span *ngFor="let ch of 'WIN!'.split('')" class="character">{{ch}}</span>
+        </h1>
+        <h1 *ngIf="!isSuccess">YOU FAILED!</h1>
         <p>{{ isSuccess ? 'GREAT JOB SOLVING THE GAME!' : 'OOPS! BETTER LUCK NEXT TIME.' }}</p>
       </div>
       <button class="quit-button"  routerLink="/games-list">QUIT</button>

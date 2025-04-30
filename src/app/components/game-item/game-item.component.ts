@@ -40,6 +40,7 @@ export class GameItemComponent {
       case 'sudoku' : return 'gamesLogo/sudoku.png';
       case 'twins-hunt' : return 'gamesLogo/twins-hunt.png';
       case '2048' : return 'gamesLogo/2048.png';
+      case 'snake' : return 'gamesLogo/snake.png';
       default : return '';
     }
   }
