@@ -21,6 +21,7 @@ export class SnakeComponent implements OnInit, OnDestroy{
   snake: number[][] = [[this.boardX/2 - 1, this.boardY/2 - 1]];
   currentDir: string = 'up';
   apple: number[] = [-1, -1];
+  currentPoints = 0;
   interval!: any;
 
   ngOnInit(): void {
@@ -98,6 +99,7 @@ export class SnakeComponent implements OnInit, OnDestroy{
 
         if(this.snakeHitBody()) this.gameEnded();
         if(this.snake[0][0] === this.apple[0] && this.snake[0][1]===this.apple[1]){
+          this.currentPoints++;
           this.putApple();
           this.snake.push(temp);
         } 

@@ -10,6 +10,35 @@
         flex-direction: column; row-gap: 0;
         width: max-content; height: max-content;
 
+        .stats-screen{
+            position: absolute;
+            top: 50%; right: 0; transform: translateX(110%) translateY(-50%);
+            width: 200px;
+            background-color: black;
+            color: var(--vintage-green);
+            text-shadow: 0 0 4px var(--vintage-green);
+            padding: 0 10px;
+
+            h1{
+                width: max-content;
+                display: inline;
+                letter-spacing: 2px;
+                font-weight: lighter;
+            }
+
+            .points{
+                font-size: 2em;
+                position: absolute;
+                right: 10px;
+                font-weight: bolder;
+                text-align: end;
+
+                .unit{
+                    font-size: .75em;
+                }
+            }
+        }
+
         .row{
             height: 20px; width: max-content;
             display: flex; flex-direction: row; column-gap: 0;
@@ -21,6 +50,22 @@
 
             .snake-head{
                 background-color: var(--vintage-green) !important;
+                position: relative;
+
+                &::after, &::before{
+                    content: '.';
+                    position: absolute; top: 40%;
+                    width: 7px; height: 7px; border-radius: 5px; background: radial-gradient(circle, var(--incorrect) 1px, white 1.5px);;
+                    z-index: 99;
+                }
+
+                &::after{
+                    right: 1px;
+                }
+
+                &::before{
+                    left: 1px;
+                }
             }
 
             .snake-body{

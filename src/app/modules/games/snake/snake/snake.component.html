@@ -3,7 +3,12 @@
         <div *ngFor="let x of toArray(boardX)" class="row">
             <div *ngFor="let y of toArray(boardY)" class="block" [ngClass]="{'snake-head' : isSnakeHead(x, y), 'snake-body' : isSnakeBody(x, y), 'apple' : apple[0]===x && apple[1]===y}"></div>
         </div>
+        <div class="stats-screen">
+            <h1>Points: </h1>
+            <span class="points">{{currentPoints}}<span class="unit">pt</span></span>
+        </div>
     </div>
+    
 </div>
 
 <app-game-toolbar [gameName]="gameName" (gameStartedEvent)="handleGameStart($event)"></app-game-toolbar>
