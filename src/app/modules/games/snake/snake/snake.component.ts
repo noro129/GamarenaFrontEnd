@@ -1,13 +1,20 @@
 import { NgClass, NgFor } from '@angular/common';
 import { Component, Directive, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { GameToolbarComponent } from "../../../../components/game-toolbar/game-toolbar.component";
+import { GameResultComponent } from "../../../../components/game-result/game-result.component";
+import { TimerComponent } from "../../../../components/timer/timer.component";
 
 @Component({
   selector: 'app-snake',
-  imports: [NgFor, NgClass],
+  imports: [NgFor, NgClass, GameToolbarComponent, GameResultComponent, TimerComponent],
   templateUrl: './snake.component.html',
   styleUrl: './snake.component.scss'
 })
 export class SnakeComponent implements OnInit, OnDestroy{
+  gameName = 'Snake';
+  gameOver = false;
+
+
   boardX = 40;
   boardY = 40;
   gameStart = false;
@@ -17,11 +24,19 @@ export class SnakeComponent implements OnInit, OnDestroy{
   interval!: any;
 
   ngOnInit(): void {
+  }
+
+  handleGameStart(event : boolean) {
     this.moveSnake();
     this.putApple();
   }
 
   ngOnDestroy(): void {
+    clearInterval(this.interval);
+  }
+
+  gameEnded() {
+    this.gameOver = true;
     clearInterval(this.interval);
   }
 
@@ -32,6 +47,17 @@ export class SnakeComponent implements OnInit, OnDestroy{
 
   isSnakeBody(x: number, y: number) : boolean {
     return this.snake.some(([a, b]) => a===x && b===y);
+  }
+
+  isSnakeHead(x: number, y: number) : boolean{
+    return x===this.snake[0][0] && y===this.snake[0][1];
+  }
+
+  snakeHitBody() : boolean {
+    for (let index =1; index<this.snake.length; index++) {
+      if (this.snake[index][0] == this.snake[0][0] && this.snake[index][1] == this.snake[0][1]) return true;
+    }
+    return false;
   }
 
   @HostListener('window:keyup', ['$event'])
@@ -70,6 +96,7 @@ export class SnakeComponent implements OnInit, OnDestroy{
           temp = prev;
         }
 
+        if(this.snakeHitBody()) this.gameEnded();
         if(this.snake[0][0] === this.apple[0] && this.snake[0][1]===this.apple[1]){
           this.putApple();
           this.snake.push(temp);
@@ -80,6 +107,10 @@ export class SnakeComponent implements OnInit, OnDestroy{
   putApple(){
     this.apple[0] = Math.floor(Math.random() * this.boardX);
     this.apple[1] = Math.floor(Math.random() * this.boardY);
+    while(this.isSnakeBody(this.apple[0], this.apple[1])) {
+      this.apple[0] = Math.floor(Math.random() * this.boardX);
+      this.apple[1] = Math.floor(Math.random() * this.boardY);
+    }
   }
 
 }

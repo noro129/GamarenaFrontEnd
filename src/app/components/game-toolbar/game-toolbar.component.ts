@@ -11,7 +11,7 @@ import { GameService } from '../../services/game.service';
 })
 export class GameToolbarComponent {
   showInstructions = false;
-  @Input() numberOfHintsLeft = 2;
+  @Input() numberOfHintsLeft = 0;
   @Input() gameName!: string;
   @Output() gameStartedEvent = new EventEmitter<boolean>();
   gameStarted = false;

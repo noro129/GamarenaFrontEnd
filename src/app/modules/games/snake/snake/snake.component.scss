@@ -4,7 +4,7 @@
 
     .game{
         position: absolute;
-        top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%);
+        top: 100%; left: 50%; transform: translateX(-50%) translateY(calc(-100% - 30px));
         background-color: black;
         display: flex;
         flex-direction: column; row-gap: 0;
@@ -17,6 +17,10 @@
             .block{
                 width: 20px; height: 20px;
                 border: 1px solid #333;
+            }
+
+            .snake-head{
+                background-color: var(--vintage-green) !important;
             }
 
             .snake-body{

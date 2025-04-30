@@ -1,7 +1,11 @@
 <div class="container">
     <div class="game">
         <div *ngFor="let x of toArray(boardX)" class="row">
-            <div *ngFor="let y of toArray(boardY)" class="block" [ngClass]="{'snake-body' : isSnakeBody(x, y), 'apple' : apple[0]===x && apple[1]===y}"></div>
+            <div *ngFor="let y of toArray(boardY)" class="block" [ngClass]="{'snake-head' : isSnakeHead(x, y), 'snake-body' : isSnakeBody(x, y), 'apple' : apple[0]===x && apple[1]===y}"></div>
         </div>
     </div>
 </div>
+
+<app-game-toolbar [gameName]="gameName" (gameStartedEvent)="handleGameStart($event)"></app-game-toolbar>
+<app-game-result [isVisible]="gameOver" [isSuccess]="false"></app-game-result>
+<app-timer [startTimer]="gameStart" [stopTimer]="gameOver"></app-timer>
