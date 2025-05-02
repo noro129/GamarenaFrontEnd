@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="game" #boardMatrix>
+        <div class="row" *ngFor="let x of toArray(boardX)">
+            <div class="block" *ngFor="let y of toArray(boardY)">
+                <span class="number" *ngIf="board[x][y]!==0">{{board[x][y]}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-game-result [isVisible]="gameEnded" [isSuccess]="maxBlock===2048"></app-game-result>

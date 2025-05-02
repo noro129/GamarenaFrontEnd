@@ -49,5 +49,12 @@ export const routes: Routes = [
         loadChildren : () => 
             import('./modules/games/snake/snake.module').then(m => m.SnakeModule),
         canActivate: [authGuard]
+    },
+    {
+        path : 'game/2048',
+        pathMatch : 'full',
+        loadChildren : () => 
+            import('./modules/games/twenty-fourty-eight/twenty-fourty-eight.module').then(m => m.TwentyFourtyEightModule),
+        canActivate: [authGuard]
     }
 ];
