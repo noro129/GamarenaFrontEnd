@@ -2,7 +2,7 @@
     <div class="game" #boardMatrix [ngClass]="{'cannot-push' : !canPush}">
         <div class="row" *ngFor="let x of toArray(boardX)">
             <div class="block" *ngFor="let y of toArray(boardY)">
-                <span class="number" *ngIf="board[x][y]!==0" [ngStyle]="{'background-color' : getBackgroundColorForNubmber(board[x][y])}">{{board[x][y]}}</span>
+                <span class="number" *ngIf="board[x][y]!==0" [ngStyle]="{'background-color' : getBackgroundColorForNubmber(board[x][y]), 'font-size' : getFontSize(board[x][y]), 'line-height' : getLineHeight(board[x][y])}">{{board[x][y]}}</span>
             </div>
         </div>
     </div>

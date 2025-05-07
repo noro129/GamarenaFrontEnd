@@ -21,7 +21,7 @@ export class TwentyFourtyEightComponent {
 
   boardX = 4;
   boardY = 4;
-  board = [[2048,0,0,0],[0,0,0,4],[0,0,2,0],[0,2,0,2]];
+  board = [[2048,0,0,0],[0,128,0,4],[0,0,2,0],[0,2,0,2]];
 
 
   constructor(private renderer : Renderer2) {}
@@ -593,7 +593,7 @@ export class TwentyFourtyEightComponent {
     const index = numbers.indexOf(num);
 
     const vintageColors = [
-                            '#586F7C',
+                            '#DC1489',
                             '#DF2935',
                             '#86BA90',
                             '#C885BC',
@@ -608,5 +608,17 @@ export class TwentyFourtyEightComponent {
     
     return vintageColors[index];
 
+  }
+
+  getFontSize(num : number) {
+    if(num>=1000) return '2em';
+    if(num>=100) return '3em';
+    return '4em';
+  }
+
+  getLineHeight(num : number) {
+    if(num>=1000) return '2.5';
+    if(num>=100) return '1.8';
+    return '1.25';
   }
 }
