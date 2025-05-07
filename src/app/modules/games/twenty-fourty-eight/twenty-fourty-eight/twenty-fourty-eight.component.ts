@@ -39,16 +39,32 @@ export class TwentyFourtyEightComponent {
     this.canPush=false;
     let moved = false;
     if(event.key === 'ArrowUp') {
-      moved = await this.pushUp();
+      if(await this.pushUp()) moved = true;
+      await new Promise(requestAnimationFrame);
+      if(await this.mergeUp()) moved = true;
+      await new Promise(requestAnimationFrame);
+      if(await this.pushUp()) moved = true;
     }
     else if(event.key === 'ArrowDown') {
-      moved = await this.pushDown();
+      if(await this.pushDown()) moved = true;
+      await new Promise(requestAnimationFrame);
+      if(await this.mergeDown()) moved = true;
+      await new Promise(requestAnimationFrame);
+      if(await this.pushDown()) moved = true;
     }
     else if(event.key === 'ArrowLeft') {
-      moved = await this.pushLeft();
+      if(await this.pushLeft()) moved = true;
+      await new Promise(requestAnimationFrame);
+      if(await this.mergeLeft()) moved = true;
+      await new Promise(requestAnimationFrame);
+      if(await this.pushLeft()) moved = true;
     }
     else if(event.key === 'ArrowRight') {
-      moved = await this.pushRight();
+      if(await this.pushRight()) moved = true;
+      await new Promise(requestAnimationFrame);
+      if(await this.mergeRight()) moved = true;
+      await new Promise(requestAnimationFrame);
+      if(await this.pushRight()) moved = true;
     }
 
     if (moved) {
@@ -88,6 +104,39 @@ export class TwentyFourtyEightComponent {
     return true;
   }
 
+  async mergeUp() : Promise<boolean> {
+    let moves = [];
+    for (let column=0; column<this.boardY; column++) {
+      for(let row=0; row<this.boardX; row++){
+        if (this.board[row][column]===0) break;
+        if(row>0 && moves.length!==0 && !moves[moves.length-1].merge && this.board[row][column]==this.board[row-1][column]) {
+          moves[moves.length-1].merge = true;
+          moves.push({
+            'row': row,
+            'column': column,
+            'merge': true
+          })
+        } else {
+          moves.push({
+            'row': row,
+            'column': column,
+            'merge': false
+          })
+        }
+      }
+    }
+    moves = moves.filter(move => move.merge);
+    if(moves.length === 0) return false;
+    let promises = [];
+    for(let move=0; move<moves.length; move+=2) {
+      const promise = this.mergeTwoBlocksUp(moves[move].row, moves[move].column);
+      promises.push(promise);
+    }
+
+    await Promise.all(promises);
+    return true;
+  }
+
   async pushDown() : Promise<boolean> {
     let moves = [];
     for(let column=0; column<this.boardY; column++) {
@@ -116,6 +165,38 @@ export class TwentyFourtyEightComponent {
         this.pushBoardCellDownBy(move.row, move.column, move.pushBy);
       }
     });
+    return true;
+  }
+
+  async mergeDown() : Promise<boolean> {
+    let moves = [];
+    for (let column=0; column<this.boardY; column++) {
+      for(let row=this.boardX-1; row>=0; row--){
+        if (this.board[row][column]===0) break;
+        if(row<this.boardX-1 && moves.length!==0 && !moves[moves.length-1].merge && this.board[row][column]==this.board[row+1][column]) {
+          moves[moves.length-1].merge = true;
+          moves.push({
+            'row': row,
+            'column': column,
+            'merge': true
+          })
+        } else {
+          moves.push({
+            'row': row,
+            'column': column,
+            'merge': false
+          })
+        }
+      }
+    }
+    moves = moves.filter(move => move.merge);
+    if(moves.length === 0) return false;
+    let promises = [];
+    for(let move=0; move<moves.length; move+=2) {
+      const promise = this.mergeTwoBlocksDown(moves[move].row, moves[move].column);
+      promises.push(promise);
+    }
+    await Promise.all(promises);
     return true;
   }
 
@@ -150,6 +231,38 @@ export class TwentyFourtyEightComponent {
     return true;
   }
 
+  async mergeLeft() : Promise<boolean> {
+    let moves = [];
+    for (let row=0; row<this.boardX; row++) {
+      for(let column=0; column<this.boardY; column++){
+        if (this.board[row][column]===0) break;
+        if(column>0 && moves.length!==0 && !moves[moves.length-1].merge && this.board[row][column]==this.board[row][column-1]) {
+          moves[moves.length-1].merge = true;
+          moves.push({
+            'row': row,
+            'column': column,
+            'merge': true
+          })
+        } else {
+          moves.push({
+            'row': row,
+            'column': column,
+            'merge': false
+          })
+        }
+      }
+    }
+    moves = moves.filter(move => move.merge);
+    if(moves.length === 0) return false;
+    let promises = [];
+    for(let move=0; move<moves.length; move+=2) {
+      const promise = this.mergeTwoBlocksLeft(moves[move].row, moves[move].column);
+      promises.push(promise);
+    }
+    await Promise.all(promises);
+    return true;
+  }
+
   async pushRight() : Promise<boolean> {
     let moves = [];
     for(let row=0; row<this.boardX; row++) {
@@ -180,7 +293,39 @@ export class TwentyFourtyEightComponent {
     return true;
   }
 
-  ///////////////////////////////// MODIFY THE FOLLOWING METHODS TO ADD MERGING CASES /////////////////////////////////
+  async mergeRight() : Promise<boolean> {
+    let moves = [];
+    for (let row=0; row<this.boardX; row++) {
+      for(let column=this.boardY-1; column>=0; column--){
+        if (this.board[row][column]===0) break;
+        if(column<this.boardY-1 && moves.length!==0 && !moves[moves.length-1].merge && this.board[row][column]==this.board[row][column+1]) {
+          moves[moves.length-1].merge = true;
+          moves.push({
+            'row': row,
+            'column': column,
+            'merge': true
+          })
+        } else {
+          moves.push({
+            'row': row,
+            'column': column,
+            'merge': false
+          })
+        }
+      }
+    }
+    moves = moves.filter(move => move.merge);
+    if(moves.length === 0) return false;
+    let promises = [];
+    for(let move=0; move<moves.length; move+=2) {
+      const promise = this.mergeTwoBlocksRight(moves[move].row, moves[move].column);
+      promises.push(promise);
+    }
+    await Promise.all(promises);
+    return true;
+  }
+
+  ///////////////////////////////// PUSHING BLOCKS METHODS /////////////////////////////////
 
   async pushBlockUpBy(row : number, column : number, pushBy : number) {
     if (pushBy === 0 || row<0 || row>=this.boardX || column<0 || column>=this.boardY) return;
@@ -242,6 +387,160 @@ export class TwentyFourtyEightComponent {
     const temp = this.board[row][column];
     this.board[row][column] = 0;
     this.board[row][column+pushBy] = temp;
+  }
+
+  ///////////////////////////////// MERGING BLOCKS METHODS /////////////////////////////////
+
+  async mergeTwoBlocksUp(row: number, column: number) {
+    const lowerBoardNumber = this.getNumberElement(row+1, column);
+
+
+    const timesTwoElement = this.renderer.createElement('span');
+    const mergeInBlock = this.getBlockElement(row, column);
+    
+    this.renderer.addClass(timesTwoElement, 'number');
+    this.renderer.setStyle(timesTwoElement, 'z-index', '9990');
+    this.renderer.setStyle(timesTwoElement, 'color', '#fb2e01');
+    this.renderer.setStyle(timesTwoElement, 'background-color', 'var(--battleship-gray)');
+    this.renderer.setStyle(timesTwoElement, 'opacity', '0');
+    this.renderer.setStyle(timesTwoElement, 'transform', 'translateY(-100%)');
+    this.renderer.setProperty(timesTwoElement, 'innerText', 'x2');
+    this.renderer.setStyle(timesTwoElement, 'transition', 'all .4s cubic-bezier(0.1, 0.9, 0.1, 1)');
+    this.renderer.appendChild(mergeInBlock, timesTwoElement);
+
+    await new Promise(requestAnimationFrame);
+
+    this.renderer.setStyle(lowerBoardNumber, 'transform', 'translateY(-90px)');
+
+    await this.waitForTransitionAnimationEnd(lowerBoardNumber);
+
+    this.board[row+1][column] = 0;
+    await new Promise(requestAnimationFrame);
+
+    this.renderer.setStyle(timesTwoElement, 'opacity', '1');
+    this.renderer.setStyle(timesTwoElement, 'transform', 'translateY(-75px)');
+    this.renderer.setStyle(timesTwoElement, 'scale', '1.1');
+
+    await this.waitForTransitionAnimationEnd(timesTwoElement);
+    
+    this.board[row][column] *= 2;
+    this.renderer.removeChild(mergeInBlock, timesTwoElement);
+
+    await new Promise(requestAnimationFrame);
+  }
+
+  async mergeTwoBlocksDown(row: number, column: number) {
+    const upperBoardNumber = this.getNumberElement(row-1, column);
+
+
+    const timesTwoElement = this.renderer.createElement('span');
+    const mergeInBlock = this.getBlockElement(row, column);
+    
+    this.renderer.addClass(timesTwoElement, 'number');
+    this.renderer.setStyle(timesTwoElement, 'z-index', '9990');
+    this.renderer.setStyle(timesTwoElement, 'color', '#fb2e01');
+    this.renderer.setStyle(timesTwoElement, 'background-color', 'var(--battleship-gray)');
+    this.renderer.setStyle(timesTwoElement, 'opacity', '0');
+    this.renderer.setStyle(timesTwoElement, 'transform', 'translateY(-100%)');
+    this.renderer.setProperty(timesTwoElement, 'innerText', 'x2');
+    this.renderer.setStyle(timesTwoElement, 'transition', 'all .4s cubic-bezier(0.1, 0.9, 0.1, 1)');
+    this.renderer.appendChild(mergeInBlock, timesTwoElement);
+
+    await new Promise(requestAnimationFrame);
+
+    this.renderer.setStyle(upperBoardNumber, 'transform', 'translateY(90px)');
+
+    await this.waitForTransitionAnimationEnd(upperBoardNumber);
+
+    this.board[row-1][column] = 0;
+    await new Promise(requestAnimationFrame);
+
+    this.renderer.setStyle(timesTwoElement, 'opacity', '1');
+    this.renderer.setStyle(timesTwoElement, 'transform', 'translateY(-75px)');
+    this.renderer.setStyle(timesTwoElement, 'scale', '1.1');
+
+    await this.waitForTransitionAnimationEnd(timesTwoElement);
+    
+    this.board[row][column] *= 2;
+    this.renderer.removeChild(mergeInBlock, timesTwoElement);
+
+    await new Promise(requestAnimationFrame);
+  }
+
+  async mergeTwoBlocksLeft(row: number, column: number) {
+    const rightBoardNumber = this.getNumberElement(row, column+1);
+
+
+    const timesTwoElement = this.renderer.createElement('span');
+    const mergeInBlock = this.getBlockElement(row, column);
+    
+    this.renderer.addClass(timesTwoElement, 'number');
+    this.renderer.setStyle(timesTwoElement, 'z-index', '9990');
+    this.renderer.setStyle(timesTwoElement, 'color', '#fb2e01');
+    this.renderer.setStyle(timesTwoElement, 'background-color', 'var(--battleship-gray)');
+    this.renderer.setStyle(timesTwoElement, 'opacity', '0');
+    this.renderer.setStyle(timesTwoElement, 'transform', 'translateY(-100%)');
+    this.renderer.setProperty(timesTwoElement, 'innerText', 'x2');
+    this.renderer.setStyle(timesTwoElement, 'transition', 'all .4s cubic-bezier(0.1, 0.9, 0.1, 1)');
+    this.renderer.appendChild(mergeInBlock, timesTwoElement);
+
+    await new Promise(requestAnimationFrame);
+
+    this.renderer.setStyle(rightBoardNumber, 'transform', 'translateX(-90px)');
+
+    await this.waitForTransitionAnimationEnd(rightBoardNumber);
+
+    this.board[row][column+1] = 0;
+    await new Promise(requestAnimationFrame);
+
+    this.renderer.setStyle(timesTwoElement, 'opacity', '1');
+    this.renderer.setStyle(timesTwoElement, 'transform', 'translateY(-75px)');
+    this.renderer.setStyle(timesTwoElement, 'scale', '1.1');
+
+    await this.waitForTransitionAnimationEnd(timesTwoElement);
+    
+    this.board[row][column] *= 2;
+    this.renderer.removeChild(mergeInBlock, timesTwoElement);
+
+    await new Promise(requestAnimationFrame);
+  }
+
+  async mergeTwoBlocksRight(row: number, column: number) {
+    const leftBoardNumber = this.getNumberElement(row, column-1);
+
+
+    const timesTwoElement = this.renderer.createElement('span');
+    const mergeInBlock = this.getBlockElement(row, column);
+    
+    this.renderer.addClass(timesTwoElement, 'number');
+    this.renderer.setStyle(timesTwoElement, 'z-index', '9990');
+    this.renderer.setStyle(timesTwoElement, 'color', '#fb2e01');
+    this.renderer.setStyle(timesTwoElement, 'background-color', 'var(--battleship-gray)');
+    this.renderer.setStyle(timesTwoElement, 'opacity', '0');
+    this.renderer.setStyle(timesTwoElement, 'transform', 'translateY(-100%)');
+    this.renderer.setProperty(timesTwoElement, 'innerText', 'x2');
+    this.renderer.setStyle(timesTwoElement, 'transition', 'all .4s cubic-bezier(0.1, 0.9, 0.1, 1)');
+    this.renderer.appendChild(mergeInBlock, timesTwoElement);
+
+    await new Promise(requestAnimationFrame);
+
+    this.renderer.setStyle(leftBoardNumber, 'transform', 'translateX(90px)');
+
+    await this.waitForTransitionAnimationEnd(leftBoardNumber);
+
+    this.board[row][column-1] = 0;
+    await new Promise(requestAnimationFrame);
+
+    this.renderer.setStyle(timesTwoElement, 'opacity', '1');
+    this.renderer.setStyle(timesTwoElement, 'transform', 'translateY(-75px)');
+    this.renderer.setStyle(timesTwoElement, 'scale', '1.1');
+
+    await this.waitForTransitionAnimationEnd(timesTwoElement);
+    
+    this.board[row][column] *= 2;
+    this.renderer.removeChild(mergeInBlock, timesTwoElement);
+
+    await new Promise(requestAnimationFrame);
   }
 
   //////////////////////////////////////////// CROSS CUTTING CONCERNS:
