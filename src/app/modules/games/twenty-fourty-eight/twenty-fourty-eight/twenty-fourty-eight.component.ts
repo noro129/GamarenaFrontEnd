@@ -1,11 +1,11 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { Component, ElementRef, HostListener, Renderer2, ViewChild } from '@angular/core';
 import { GameResultComponent } from "../../../../components/game-result/game-result.component";
 import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-twenty-fourty-eight',
-  imports: [NgFor, NgIf, GameResultComponent],
+  imports: [NgFor, NgIf, NgClass, NgStyle, GameResultComponent],
   templateUrl: './twenty-fourty-eight.component.html',
   styleUrl: './twenty-fourty-eight.component.scss'
 })
@@ -21,7 +21,7 @@ export class TwentyFourtyEightComponent {
 
   boardX = 4;
   boardY = 4;
-  board = [[0,0,0,0],[0,0,0,4],[0,0,2,0],[0,2,0,2]];
+  board = [[2048,0,0,0],[0,0,0,4],[0,0,2,0],[0,2,0,2]];
 
 
   constructor(private renderer : Renderer2) {}
@@ -400,8 +400,8 @@ export class TwentyFourtyEightComponent {
     
     this.renderer.addClass(timesTwoElement, 'number');
     this.renderer.setStyle(timesTwoElement, 'z-index', '9990');
-    this.renderer.setStyle(timesTwoElement, 'color', '#fb2e01');
-    this.renderer.setStyle(timesTwoElement, 'background-color', 'var(--battleship-gray)');
+    this.renderer.setStyle(timesTwoElement, 'color', this.getBackgroundColorForNubmber(this.board[row][column]));
+    this.renderer.setStyle(timesTwoElement, 'background-color', 'white');
     this.renderer.setStyle(timesTwoElement, 'opacity', '0');
     this.renderer.setStyle(timesTwoElement, 'transform', 'translateY(-100%)');
     this.renderer.setProperty(timesTwoElement, 'innerText', 'x2');
@@ -424,6 +424,7 @@ export class TwentyFourtyEightComponent {
     await this.waitForTransitionAnimationEnd(timesTwoElement);
     
     this.board[row][column] *= 2;
+    this.maxBlock = Math.max(this.maxBlock, this.board[row][column]);
     this.renderer.removeChild(mergeInBlock, timesTwoElement);
 
     await new Promise(requestAnimationFrame);
@@ -438,8 +439,8 @@ export class TwentyFourtyEightComponent {
     
     this.renderer.addClass(timesTwoElement, 'number');
     this.renderer.setStyle(timesTwoElement, 'z-index', '9990');
-    this.renderer.setStyle(timesTwoElement, 'color', '#fb2e01');
-    this.renderer.setStyle(timesTwoElement, 'background-color', 'var(--battleship-gray)');
+    this.renderer.setStyle(timesTwoElement, 'color', this.getBackgroundColorForNubmber(this.board[row][column]));
+    this.renderer.setStyle(timesTwoElement, 'background-color', 'white');
     this.renderer.setStyle(timesTwoElement, 'opacity', '0');
     this.renderer.setStyle(timesTwoElement, 'transform', 'translateY(-100%)');
     this.renderer.setProperty(timesTwoElement, 'innerText', 'x2');
@@ -453,6 +454,7 @@ export class TwentyFourtyEightComponent {
     await this.waitForTransitionAnimationEnd(upperBoardNumber);
 
     this.board[row-1][column] = 0;
+    this.maxBlock = Math.max(this.maxBlock, this.board[row][column]);
     await new Promise(requestAnimationFrame);
 
     this.renderer.setStyle(timesTwoElement, 'opacity', '1');
@@ -476,8 +478,8 @@ export class TwentyFourtyEightComponent {
     
     this.renderer.addClass(timesTwoElement, 'number');
     this.renderer.setStyle(timesTwoElement, 'z-index', '9990');
-    this.renderer.setStyle(timesTwoElement, 'color', '#fb2e01');
-    this.renderer.setStyle(timesTwoElement, 'background-color', 'var(--battleship-gray)');
+    this.renderer.setStyle(timesTwoElement, 'color', this.getBackgroundColorForNubmber(this.board[row][column]));
+    this.renderer.setStyle(timesTwoElement, 'background-color', 'white');
     this.renderer.setStyle(timesTwoElement, 'opacity', '0');
     this.renderer.setStyle(timesTwoElement, 'transform', 'translateY(-100%)');
     this.renderer.setProperty(timesTwoElement, 'innerText', 'x2');
@@ -491,6 +493,7 @@ export class TwentyFourtyEightComponent {
     await this.waitForTransitionAnimationEnd(rightBoardNumber);
 
     this.board[row][column+1] = 0;
+    this.maxBlock = Math.max(this.maxBlock, this.board[row][column]);
     await new Promise(requestAnimationFrame);
 
     this.renderer.setStyle(timesTwoElement, 'opacity', '1');
@@ -514,8 +517,8 @@ export class TwentyFourtyEightComponent {
     
     this.renderer.addClass(timesTwoElement, 'number');
     this.renderer.setStyle(timesTwoElement, 'z-index', '9990');
-    this.renderer.setStyle(timesTwoElement, 'color', '#fb2e01');
-    this.renderer.setStyle(timesTwoElement, 'background-color', 'var(--battleship-gray)');
+    this.renderer.setStyle(timesTwoElement, 'color', this.getBackgroundColorForNubmber(this.board[row][column]));
+    this.renderer.setStyle(timesTwoElement, 'background-color', 'white');
     this.renderer.setStyle(timesTwoElement, 'opacity', '0');
     this.renderer.setStyle(timesTwoElement, 'transform', 'translateY(-100%)');
     this.renderer.setProperty(timesTwoElement, 'innerText', 'x2');
@@ -529,6 +532,7 @@ export class TwentyFourtyEightComponent {
     await this.waitForTransitionAnimationEnd(leftBoardNumber);
 
     this.board[row][column-1] = 0;
+    this.maxBlock = Math.max(this.maxBlock, this.board[row][column]);
     await new Promise(requestAnimationFrame);
 
     this.renderer.setStyle(timesTwoElement, 'opacity', '1');
@@ -582,5 +586,27 @@ export class TwentyFourtyEightComponent {
       }
       element.addEventListener('transitionend', handler);
     })
+  }
+
+  getBackgroundColorForNubmber(num : number ){
+    const numbers = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
+    const index = numbers.indexOf(num);
+
+    const vintageColors = [
+                            '#586F7C',
+                            '#DF2935',
+                            '#86BA90',
+                            '#C885BC',
+                            '#3A7CA5',
+                            '#77625C',
+                            '#FF6F59',
+                            '#EF3054',
+                            '#AA7DCE',
+                            '#412234',
+                            '#16425B'
+                          ];
+    
+    return vintageColors[index];
+
   }
 }

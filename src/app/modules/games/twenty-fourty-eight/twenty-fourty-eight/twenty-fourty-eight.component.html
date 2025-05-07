@@ -1,8 +1,8 @@
 <div class="container">
-    <div class="game" #boardMatrix>
+    <div class="game" #boardMatrix [ngClass]="{'cannot-push' : !canPush}">
         <div class="row" *ngFor="let x of toArray(boardX)">
             <div class="block" *ngFor="let y of toArray(boardY)">
-                <span class="number" *ngIf="board[x][y]!==0">{{board[x][y]}}</span>
+                <span class="number" *ngIf="board[x][y]!==0" [ngStyle]="{'background-color' : getBackgroundColorForNubmber(board[x][y])}">{{board[x][y]}}</span>
             </div>
         </div>
     </div>
