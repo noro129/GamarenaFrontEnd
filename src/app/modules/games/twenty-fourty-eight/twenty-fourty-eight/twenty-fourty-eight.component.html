@@ -10,4 +10,4 @@
 
 <app-timer [startTimer]="startGame" [stopTimer]="gameEnded"></app-timer>
 <app-game-toolbar (gameStartedEvent)="handleGameStart($event)"></app-game-toolbar>
-<app-game-result [isVisible]="gameEnded" [isSuccess]="maxBlock===2048"></app-game-result>
+<app-game-result [gameName]="gameName" [isVisible]="gameEnded" [isSuccess]="maxBlock===2048"></app-game-result>

@@ -10,4 +10,4 @@
 
 <app-timer [startTimer]="startGame" [stopTimer]="gameSolved"></app-timer>
 <app-game-toolbar [gameName]="gameName" (gameStartedEvent)="handleGameStart($event)" [numberOfHintsLeft]="4"/>
-<app-game-result [isVisible]="colorsMatched == (rows*columns)/2"/>
+<app-game-result [gameName]="gameName" [isVisible]="colorsMatched == (rows*columns)/2"/>

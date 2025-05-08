@@ -12,5 +12,5 @@
 </div>
 
 <app-game-toolbar [gameName]="gameName" (gameStartedEvent)="handleGameStart($event)"></app-game-toolbar>
-<app-game-result [isVisible]="gameOver" [isSuccess]="false"></app-game-result>
+<app-game-result [gameName]="gameName" [isVisible]="gameOver" [isSuccess]="false"></app-game-result>
 <app-timer [startTimer]="gameStart" [stopTimer]="gameOver"></app-timer>

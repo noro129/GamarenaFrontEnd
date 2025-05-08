@@ -27,4 +27,12 @@ export class GameService {
     const params = new HttpParams().set("gameName", gameName);
     return this.http.post<boolean>(this.URL+"/start",null, {params})
   }
+
+  setGameResult(gameName: string, gameResult: boolean, minutes: number, seconds: number) : Observable<boolean> {
+    const params = new HttpParams().set("gameName", gameName);
+    console.log('sending game result: '+gameName);
+    console.log('game won: '+gameResult);
+    if(gameResult) console.log('solved in : '+minutes+'minutes and '+seconds+'seconds.');
+    return this.http.post<boolean>(this.URL+'/set-result', {'gameName' : gameName, 'gameWon' : gameResult, 'minutes': minutes, 'seconds': seconds});
+  }
 }

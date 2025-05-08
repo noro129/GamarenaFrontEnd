@@ -14,4 +14,4 @@
 </div>
 <app-timer [startTimer]="startGame" [stopTimer]="gameSolved"></app-timer>
 <app-game-toolbar [gameName]="gameName" (gameStartedEvent)="handleGameStart($event)"/>
-<app-game-result [isVisible]="gameSolved"/>
+<app-game-result [gameName]="gameName" [isVisible]="gameSolved || currentAttempt===6" [isSuccess]="gameSolved"/>
