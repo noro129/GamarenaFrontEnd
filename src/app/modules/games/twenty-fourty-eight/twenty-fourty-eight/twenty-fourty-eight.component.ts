@@ -2,10 +2,12 @@ import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { Component, ElementRef, HostListener, Renderer2, ViewChild } from '@angular/core';
 import { GameResultComponent } from "../../../../components/game-result/game-result.component";
 import { delay } from 'rxjs';
+import { GameToolbarComponent } from "../../../../components/game-toolbar/game-toolbar.component";
+import { TimerComponent } from "../../../../components/timer/timer.component";
 
 @Component({
   selector: 'app-twenty-fourty-eight',
-  imports: [NgFor, NgIf, NgClass, NgStyle, GameResultComponent],
+  imports: [NgFor, NgIf, NgClass, NgStyle, GameResultComponent, GameToolbarComponent, TimerComponent],
   templateUrl: './twenty-fourty-eight.component.html',
   styleUrl: './twenty-fourty-eight.component.scss'
 })
@@ -21,10 +23,15 @@ export class TwentyFourtyEightComponent {
 
   boardX = 4;
   boardY = 4;
-  board = [[2048,0,0,0],[0,128,0,4],[0,0,2,0],[0,2,0,2]];
+  board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
 
 
   constructor(private renderer : Renderer2) {}
+
+  handleGameStart(event : boolean) {
+    this.startGame = true;
+    this.addNewBlock();
+  }
 
   toArray(size : number) : number[]{
     return Array.from({length: size}, (_, i) => i);
@@ -32,8 +39,7 @@ export class TwentyFourtyEightComponent {
 
   @HostListener('window:keyup', ['$event'])
   async arrowKey(event : KeyboardEvent) {
-    if(!this.canPush) {
-      console.log('cannot push yet!!!');
+    if(!this.startGame || !this.canPush) {
       return;
     }
     this.canPush=false;
