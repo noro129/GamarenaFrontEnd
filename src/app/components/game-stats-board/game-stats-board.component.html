@@ -10,6 +10,16 @@
             <span class="button-highlight" [ngClass]="{'user-stats' : !globalStats}"></span>
         </div>
 
+        <div class="buttons-wrapper hints" *ngIf="hints !== 0 && globalStats">
+            <p>Hints :</p>
+            <span class="hints-wrapper">
+                <span class="button-wrapper" *ngFor="let hint of toArray(hints+1)">
+                    <button (click)="selectHint(hint)">{{hint}}</button>
+                </span>
+            </span>
+            <span #hintSelector class="hint-selector" [ngStyle]="{'transform' : 'translateX('+(-hints * 22)+'px)'}"></span>
+        </div>
+
         <div class="users-list">
             <div class="user-result" *ngFor="let gameStat of gameStats; let i=index">
                 <p class="order">{{order[i]}}.</p>

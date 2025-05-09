@@ -59,6 +59,43 @@
             }
         }
 
+        .hints{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+            >p{
+                width: 60px;
+                font-family: sans-serif;
+                font-weight: bolder;
+            }
+
+            .hints-wrapper{
+                width: 220px;
+                display: flex;
+                flex-direction: row;
+                column-gap: 2px;
+                justify-content: end;
+            }
+
+            .button-wrapper{
+                width: 20px;
+
+                >button{
+                    width: 20px;
+                }
+            }
+
+            .hint-selector{
+                height: 100%; width: 20px;
+                position: absolute;
+                right: 10px;
+                background-color: #888;
+                transition: transform .1s linear;
+            }
+        }
+
         .users-list{
             width: 270px;
             display: flex;

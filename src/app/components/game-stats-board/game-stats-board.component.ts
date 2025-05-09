@@ -1,17 +1,19 @@
-import { NgClass, NgFor } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
+import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { GameStat } from '../../models/GameStat';
 import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-game-stats-board',
-  imports: [NgFor, NgClass],
+  imports: [NgIf ,NgFor, NgClass, NgStyle],
   templateUrl: './game-stats-board.component.html',
   styleUrl: './game-stats-board.component.scss'
 })
 export class GameStatsBoardComponent implements OnInit{
   @Input() gameName!: string;
   @Input() position: string = 'right';
+  @Input() hints = 2;
+  @ViewChild('hintSelector') hintSelector!: ElementRef;
   order!: number[];
 
 
@@ -19,10 +21,14 @@ export class GameStatsBoardComponent implements OnInit{
   globalStats: boolean = true;
   gameStats!: GameStat[];
 
-  constructor(private gameService: GameService) {}
+  constructor(private gameService: GameService, private renderer : Renderer2) {}
 
   ngOnInit(): void {
     this.getGlobalGameStats();
+  }
+
+  toArray(size : number) {
+    return Array.from({length:size}, (_, i) => i);
   }
 
   getGlobalGameStats() {
@@ -43,5 +49,10 @@ export class GameStatsBoardComponent implements OnInit{
 
   switchStats(toGlobal : boolean) {
     this.globalStats = toGlobal;
+  }
+
+  selectHint(hint: number) {
+    const hintItemSelector = this.hintSelector.nativeElement;
+    this.renderer.setStyle(hintItemSelector, 'transform', `translateX(${(hint - this.hints)*22}px)`);
   }
 }
