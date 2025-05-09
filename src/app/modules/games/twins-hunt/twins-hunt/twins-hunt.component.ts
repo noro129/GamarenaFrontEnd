@@ -4,10 +4,11 @@ import { TimerComponent } from '../../../../components/timer/timer.component';
 import { GameToolbarComponent } from '../../../../components/game-toolbar/game-toolbar.component';
 import { GameResultComponent } from '../../../../components/game-result/game-result.component';
 import { TwinsHuntService } from '../twins-hunt.service';
+import { GameStatsBoardComponent } from '../../../../components/game-stats-board/game-stats-board.component';
 
 @Component({
   selector: 'app-twins-hunt',
-  imports: [NgFor, TimerComponent, GameToolbarComponent, GameResultComponent],
+  imports: [NgFor, TimerComponent, GameToolbarComponent, GameResultComponent, GameStatsBoardComponent],
   templateUrl: './twins-hunt.component.html',
   styleUrl: './twins-hunt.component.scss'
 })

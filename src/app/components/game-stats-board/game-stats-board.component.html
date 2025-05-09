@@ -1,0 +1,22 @@
+<div class="container" [ngClass]="{'position-left' : position==='left', 'position-right' : position==='right'}">
+    <div class="board">
+        <div class="header">
+            <h1>{{header}}</h1>
+        </div>
+    
+        <div class="buttons-wrapper">
+            <span class="button-wrapper"><button class="global-stats" (click)="switchStats(true)">GLOBAL STATS</button></span>
+            <span class="button-wrapper"><button class="own-user-stats" (click)="switchStats(false)">MY STATS</button></span>
+            <span class="button-highlight" [ngClass]="{'user-stats' : !globalStats}"></span>
+        </div>
+
+        <div class="users-list">
+            <div class="user-result" *ngFor="let gameStat of gameStats; let i=index">
+                <p class="order">{{order[i]}}.</p>
+                <p class="username">{{gameStat.username}}</p>
+                <p class="minutes">{{gameStat.minutes}}</p>
+                <p class="seconds">{{gameStat.seconds}}</p>
+            </div>
+        </div>
+    </div>
+</div>

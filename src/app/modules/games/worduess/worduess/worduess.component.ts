@@ -4,10 +4,11 @@ import { TimerComponent } from '../../../../components/timer/timer.component';
 import { GameToolbarComponent } from "../../../../components/game-toolbar/game-toolbar.component";
 import { GameResultComponent } from "../../../../components/game-result/game-result.component";
 import { WorduessService } from '../worduess.service';
+import { GameStatsBoardComponent } from "../../../../components/game-stats-board/game-stats-board.component";
 
 @Component({
   selector: 'app-worduess',
-  imports: [NgFor, NgClass, UpperCasePipe, TimerComponent, GameToolbarComponent, GameResultComponent],
+  imports: [NgFor, NgClass, UpperCasePipe, TimerComponent, GameToolbarComponent, GameResultComponent, GameStatsBoardComponent],
   templateUrl: './worduess.component.html',
   styleUrl: './worduess.component.scss'
 })

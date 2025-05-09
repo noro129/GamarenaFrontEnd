@@ -1,0 +1,154 @@
+.container{
+    position: absolute;
+    bottom: 10px;
+    width: 300px;
+    background-color: #111;
+    color: white;
+    border-top-right-radius: 20px; border-top-left-radius: 20px;
+    padding: 15px;
+
+    .board{
+
+        .header{
+            color: var(--battleship-gray);
+            width: 100%;
+            text-align: center;
+            letter-spacing: 2px;
+            font-size: 1.5em;
+            font-weight: bolder;
+            margin-bottom: 5px;
+        }
+
+        .buttons-wrapper{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            column-gap: 10px;
+            justify-content: end;
+            border-radius: 5px;
+            padding: 2px;
+            border: 1px solid var(--battleship-gray);
+            box-shadow: 0 0 5px var(--battleship-gray);
+            margin-bottom: 10px;
+            position: relative;
+           
+            .button-wrapper{
+                z-index: 99;
+                >button{
+                    cursor: pointer;
+                    height: 20px; width: 110px;
+                    background-color: transparent;
+                    color: white;
+                }
+
+                
+            }
+
+            .button-highlight{
+                width: 110px; height: 20px;
+                background-color: #888;
+                position: absolute; top: 2px; right: 2px;
+                border-radius: 5px;
+                z-index: 0;
+                transition: transform .1s linear;
+                transform: translateX(-120px);
+            }
+
+            .user-stats {
+                transform: unset;
+            }
+        }
+
+        .users-list{
+            width: 270px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 2px;
+
+            .user-result{
+                width: 100%;
+                padding: 0 10px;
+                display: flex;
+                flex-direction: row;
+                row-gap: 0;
+                border-radius: 5px;
+
+                .order{
+                    width: 30px;
+                    background-color: #111;
+                    border-radius: 10px;
+                    text-align: center;
+                }
+
+                .username{
+                    padding-left: 5px;
+                    width: 100px;
+                }
+
+                .minutes{
+                    width: 60px;
+                    text-align: right;
+                    border-left: 1px solid #111;
+                    border-right: 1px solid #111;
+                    padding-right: 5px;
+                }
+
+                .seconds{
+                    width: 60px;
+                    text-align: left;
+                    padding-left: 5px;
+                }
+
+                &:nth-of-type(1) {
+                    margin-top: 15px;
+
+                    .username{
+                        position: relative;
+                        &::after{
+                            content: 'Player';
+                            position: absolute; top: 0; left: 0;
+                            transform: translateY(-100%);
+                            color: white;
+                        }
+                    }
+
+                    .minutes{
+                        position: relative;
+                        &::after{
+                            content: 'Minutes';
+                            position: absolute; top: 0; left: 0;
+                            transform: translateY(-100%);
+                            color: white;
+                        }
+                    }
+
+                    .seconds{
+                        position: relative;
+                        &::after{
+                            content: 'Seconds';
+                            position: absolute; top: 0; left: 0;
+                            transform: translateY(-100%);
+                            color: white;
+                        }
+                    }
+                }
+            }
+
+            @for $i from 1 through 10{
+                @if $i%2==0 {
+                    .user-result:nth-of-type(#{$i}){
+                        background-color: #888;
+                    }
+                } @else {
+                    .user-result:nth-of-type(#{$i}){
+                        background-color: #222;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+.position-left{ left: 20px; }
+.position-right{ right: 20px; }

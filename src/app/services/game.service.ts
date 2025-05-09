@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Game } from '../models/game';
+import { GameStat } from '../models/GameStat';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,11 @@ export class GameService {
     console.log('game won: '+gameResult);
     if(gameResult) console.log('solved in : '+minutes+'minutes and '+seconds+'seconds.');
     return this.http.post<boolean>(this.URL+'/set-result', {'gameName' : gameName, 'gameWon' : gameResult, 'minutes': minutes, 'seconds': seconds});
+  }
+
+  getGameStats(gameName: string, global: boolean) : Observable<GameStat[]> {
+    const params = new HttpParams().set("gameName", gameName);
+    if(global) return this.http.get<GameStat[]>(this.URL+"/stats", {params});
+    else return this.http.get<GameStat[]>(this.URL+"/stats/user", {params});
   }
 }
