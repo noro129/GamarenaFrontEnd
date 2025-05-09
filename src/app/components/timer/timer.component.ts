@@ -1,6 +1,7 @@
 import { NgClass } from '@angular/common';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { delay } from 'rxjs';
+import { DataShareService } from '../../services/data-share.service';
 
 @Component({
   selector: 'app-timer',
@@ -20,6 +21,8 @@ export class TimerComponent implements OnDestroy, OnChanges {
   animate_second_left_digit = false;
   animate_second_right_digit = false;
 
+  constructor(private dataShareService : DataShareService) {}
+
   ngOnDestroy(): void {
     this.stopTimer=true;
   }
@@ -27,6 +30,12 @@ export class TimerComponent implements OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['startTimer'] && changes['startTimer'].currentValue) {
       this.timer();
+    }
+    if(changes['stopTimer'] && changes['stopTimer'].currentValue) {
+      this.dataShareService.sendData({
+        'minutes' : this.minutes,
+        'seconds' : this.seconds
+      })
     }
   }
   

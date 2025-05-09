@@ -2,6 +2,7 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GameService } from '../../services/game.service';
+import { DataShareService } from '../../services/data-share.service';
 
 @Component({
   selector: 'app-game-result',
@@ -14,7 +15,7 @@ export class GameResultComponent implements OnChanges {
   @Input() isVisible: boolean = false;
   @Input() isSuccess: boolean = true;
 
-  constructor(private gameService: GameService) {}
+  constructor(private gameService: GameService, private dataShareService : DataShareService) {}
 
 
   hide() {
@@ -23,7 +24,17 @@ export class GameResultComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['isVisible'] && changes['isVisible'].currentValue){
-      this.gameService.setGameResult(this.gameName, this.isSuccess, 0, 0).subscribe({
+      let minutes = 0;
+      let seconds = 0;
+      if(this.isSuccess) {
+          this.dataShareService.currentData$.subscribe(data => {
+          if(data) {
+            minutes = data.minutes;
+            seconds = data.seconds;
+          }
+        })
+      }
+      this.gameService.setGameResult(this.gameName, this.isSuccess, minutes, seconds).subscribe({
         next: (response) => {
           if(response) console.log('successfully set game result.');
         },
