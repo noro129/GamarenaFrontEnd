@@ -29,16 +29,12 @@ export class GameService {
     return this.http.post<boolean>(this.URL+"/start",null, {params})
   }
 
-  setGameResult(gameName: string, gameResult: boolean, minutes: number, seconds: number) : Observable<boolean> {
-    const params = new HttpParams().set("gameName", gameName);
-    console.log('sending game result: '+gameName);
-    console.log('game won: '+gameResult);
-    if(gameResult) console.log('solved in : '+minutes+'minutes and '+seconds+'seconds.');
-    return this.http.post<boolean>(this.URL+'/set-result', {'gameName' : gameName, 'gameWon' : gameResult, 'minutes': minutes, 'seconds': seconds});
+  setGameResult(gameName: string, gameResult: boolean, minutes: number, seconds: number, hints: number) : Observable<boolean> {
+    return this.http.post<boolean>(this.URL+'/set-result', {'gameName' : gameName, 'gameWon' : gameResult, 'minutes': minutes, 'seconds': seconds, 'hints': hints});
   }
 
-  getGameStats(gameName: string, global: boolean) : Observable<GameStat[]> {
-    const params = new HttpParams().set("gameName", gameName);
+  getGameStats(gameName: string, hints: number, global: boolean) : Observable<GameStat[]> {
+    const params = new HttpParams().set("gameName", gameName).set("hints", hints);
     if(global) return this.http.get<GameStat[]>(this.URL+"/stats", {params});
     else return this.http.get<GameStat[]>(this.URL+"/stats/user", {params});
   }

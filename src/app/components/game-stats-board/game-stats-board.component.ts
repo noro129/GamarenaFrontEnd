@@ -24,15 +24,15 @@ export class GameStatsBoardComponent implements OnInit{
   constructor(private gameService: GameService, private renderer : Renderer2) {}
 
   ngOnInit(): void {
-    this.getGlobalGameStats();
+    this.getGlobalGameStats(0);
   }
 
   toArray(size : number) {
     return Array.from({length:size}, (_, i) => i);
   }
 
-  getGlobalGameStats() {
-    this.gameService.getGameStats(this.gameName, true).subscribe({
+  getGlobalGameStats(hints: number) {
+    this.gameService.getGameStats(this.gameName, hints, true).subscribe({
       next: (response) => {
         this.gameStats = response;
         this.order = [1];
@@ -54,5 +54,6 @@ export class GameStatsBoardComponent implements OnInit{
   selectHint(hint: number) {
     const hintItemSelector = this.hintSelector.nativeElement;
     this.renderer.setStyle(hintItemSelector, 'transform', `translateX(${(hint - this.hints)*22}px)`);
+    this.getGlobalGameStats(hint);
   }
 }

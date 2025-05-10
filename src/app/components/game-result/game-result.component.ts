@@ -26,15 +26,22 @@ export class GameResultComponent implements OnChanges {
     if(changes['isVisible'] && changes['isVisible'].currentValue){
       let minutes = 0;
       let seconds = 0;
+      let hints = 0;
       if(this.isSuccess) {
-          this.dataShareService.currentData$.subscribe(data => {
+        this.dataShareService.currentData$.subscribe(data => {
           if(data) {
             minutes = data.minutes;
             seconds = data.seconds;
           }
+        });
+        this.dataShareService.requestData();
+        this.dataShareService.response$.subscribe(data => {
+          if(data) {
+            hints = data.hints;
+          }
         })
       }
-      this.gameService.setGameResult(this.gameName, this.isSuccess, minutes, seconds).subscribe({
+      this.gameService.setGameResult(this.gameName, this.isSuccess, minutes, seconds, hints).subscribe({
         next: (response) => {
           if(response) console.log('successfully set game result.');
         },
