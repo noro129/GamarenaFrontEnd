@@ -22,6 +22,7 @@ export class GameStatsBoardComponent implements OnInit{
   globalStats: boolean = true;
   gameStats!: GameStat[];
   userGameStats!: UserGameStat[];
+  boardHidden = false;
 
   constructor(private gameService: GameService, private renderer : Renderer2) {}
 
@@ -31,6 +32,10 @@ export class GameStatsBoardComponent implements OnInit{
 
   toArray(size : number) {
     return Array.from({length:size}, (_, i) => i);
+  }
+
+  toggleHideShowBoard() {
+    this.boardHidden = !this.boardHidden;
   }
 
   getGlobalGameStats(hints: number) {

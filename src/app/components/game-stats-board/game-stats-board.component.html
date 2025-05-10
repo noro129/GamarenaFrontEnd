@@ -1,5 +1,5 @@
-<div class="container" [ngClass]="{'position-left' : position==='left', 'position-right' : position==='right'}">
-    <div class="board">
+<div class="container" [ngClass]="{'position-left' : position==='left', 'position-right' : position==='right', 'hide-board' : boardHidden}">
+    <div class="board" [ngClass]="{'hide-board' : boardHidden}">
         <div class="header">
             <h1>{{header}}</h1>
         </div>
@@ -40,4 +40,6 @@
             </span>
         </div>
     </div>
+
+    <span class="hide-show-button" [ngClass]="{'hidden' : boardHidden}" (click)="toggleHideShowBoard()">&gt;</span>
 </div>
