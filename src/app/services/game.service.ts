@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Game } from '../models/game';
 import { GameStat } from '../models/GameStat';
+import { UserGameStat } from '../models/UserGameStat';
 
 @Injectable({
   providedIn: 'root'
@@ -33,9 +34,13 @@ export class GameService {
     return this.http.post<boolean>(this.URL+'/set-result', {'gameName' : gameName, 'gameWon' : gameResult, 'minutes': minutes, 'seconds': seconds, 'hints': hints});
   }
 
-  getGameStats(gameName: string, hints: number, global: boolean) : Observable<GameStat[]> {
+  getGameStats(gameName: string, hints: number) : Observable<GameStat[]> {
     const params = new HttpParams().set("gameName", gameName).set("hints", hints);
-    if(global) return this.http.get<GameStat[]>(this.URL+"/stats", {params});
-    else return this.http.get<GameStat[]>(this.URL+"/stats/user", {params});
+    return this.http.get<GameStat[]>(this.URL+"/stats", {params});
+  }
+
+  getUserGameStats(gameName : string) : Observable<UserGameStat[]> {
+    const params = new HttpParams().set("gameName", gameName);
+    return this.http.get<UserGameStat[]>(this.URL+"/stats/user", {params});
   }
 }

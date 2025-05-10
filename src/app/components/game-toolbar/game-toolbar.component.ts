@@ -27,6 +27,7 @@ export class GameToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataShareService.request$.subscribe(() => {
+      console.log("nb of hints used: "+this.usedHints);
       this.dataShareService.responseData({'hints' : this.usedHints});
     })
   }

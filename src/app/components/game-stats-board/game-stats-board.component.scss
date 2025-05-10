@@ -96,7 +96,7 @@
             }
         }
 
-        .users-list{
+        .stats-list{
             width: 270px;
             display: flex;
             flex-direction: column;
@@ -115,6 +115,7 @@
                     background-color: #111;
                     border-radius: 10px;
                     text-align: center;
+                    margin-right: 5px;
                 }
 
                 .username{
@@ -125,8 +126,6 @@
                 .minutes{
                     width: 60px;
                     text-align: right;
-                    border-left: 1px solid #111;
-                    border-right: 1px solid #111;
                     padding-right: 5px;
                 }
 
@@ -136,13 +135,19 @@
                     padding-left: 5px;
                 }
 
+                .hints{
+                    width: 60px;
+                    text-align: right;
+
+                }
+
                 &:nth-of-type(1) {
                     margin-top: 15px;
 
                     .username{
                         position: relative;
                         &::after{
-                            content: 'Player';
+                            content: attr(id);
                             position: absolute; top: 0; left: 0;
                             transform: translateY(-100%);
                             color: white;
@@ -152,7 +157,7 @@
                     .minutes{
                         position: relative;
                         &::after{
-                            content: 'Minutes';
+                            content: attr(id);
                             position: absolute; top: 0; left: 0;
                             transform: translateY(-100%);
                             color: white;
@@ -162,7 +167,17 @@
                     .seconds{
                         position: relative;
                         &::after{
-                            content: 'Seconds';
+                            content: attr(id);
+                            position: absolute; top: 0; left: 0;
+                            transform: translateY(-100%);
+                            color: white;
+                        }
+                    }
+
+                    .hints{
+                        position: relative;
+                        &::after{
+                            content: attr(id);
                             position: absolute; top: 0; left: 0;
                             transform: translateY(-100%);
                             color: white;
@@ -175,10 +190,28 @@
                 @if $i%2==0 {
                     .user-result:nth-of-type(#{$i}){
                         background-color: #888;
+
+                        .minutes{
+                            border-left: 1px solid #222;
+                            border-right: 1px solid #222;
+                        }
+
+                        .seconds{
+                            border-right: 1px solid #222;
+                        }
                     }
                 } @else {
                     .user-result:nth-of-type(#{$i}){
                         background-color: #222;
+
+                        .minutes{
+                            border-left: 1px solid #888;
+                            border-right: 1px solid #888;
+                        }
+
+                        .seconds{
+                            border-right: 1px solid #888;
+                        }
                     }
                 }
             }

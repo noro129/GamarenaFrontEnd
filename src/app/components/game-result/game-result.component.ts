@@ -3,6 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GameService } from '../../services/game.service';
 import { DataShareService } from '../../services/data-share.service';
+import { errorContext } from 'rxjs/internal/util/errorContext';
 
 @Component({
   selector: 'app-game-result',
@@ -41,6 +42,7 @@ export class GameResultComponent implements OnChanges {
           }
         })
       }
+      console.log("set results");
       this.gameService.setGameResult(this.gameName, this.isSuccess, minutes, seconds, hints).subscribe({
         next: (response) => {
           if(response) console.log('successfully set game result.');

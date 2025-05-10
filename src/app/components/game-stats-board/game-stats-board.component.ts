@@ -2,6 +2,7 @@ import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { GameStat } from '../../models/GameStat';
 import { GameService } from '../../services/game.service';
+import { UserGameStat } from '../../models/UserGameStat';
 
 @Component({
   selector: 'app-game-stats-board',
@@ -20,6 +21,7 @@ export class GameStatsBoardComponent implements OnInit{
   header = "Game Stats";
   globalStats: boolean = true;
   gameStats!: GameStat[];
+  userGameStats!: UserGameStat[];
 
   constructor(private gameService: GameService, private renderer : Renderer2) {}
 
@@ -32,7 +34,7 @@ export class GameStatsBoardComponent implements OnInit{
   }
 
   getGlobalGameStats(hints: number) {
-    this.gameService.getGameStats(this.gameName, hints, true).subscribe({
+    this.gameService.getGameStats(this.gameName, hints).subscribe({
       next: (response) => {
         this.gameStats = response;
         this.order = [1];
@@ -47,8 +49,27 @@ export class GameStatsBoardComponent implements OnInit{
     })
   }
 
+  getUserGameStats(){
+    this.gameService.getUserGameStats(this.gameName).subscribe({
+      next: (response) => {
+        this.userGameStats = response;
+        this.order = [1];
+        for(let i=1; i<this.userGameStats.length; i++) {
+          if(this.userGameStats[i-1].minutes === this.userGameStats[i].minutes && this.userGameStats[i-1].seconds === this.userGameStats[i].seconds) this.order[i] = this.order[i-1];
+          else this.order[i] = this.order.length + 1;
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+  }
+
   switchStats(toGlobal : boolean) {
+    if (this.globalStats === toGlobal) return;
     this.globalStats = toGlobal;
+    if(this.globalStats) this.getGlobalGameStats(0);
+    else this.getUserGameStats();
   }
 
   selectHint(hint: number) {

@@ -20,13 +20,24 @@
             <span #hintSelector class="hint-selector" [ngStyle]="{'transform' : 'translateX('+(-hints * 22)+'px)'}"></span>
         </div>
 
-        <div class="users-list">
-            <div class="user-result" *ngFor="let gameStat of gameStats; let i=index">
-                <p class="order">{{order[i]}}.</p>
-                <p class="username">{{gameStat.username}}</p>
-                <p class="minutes">{{gameStat.minutes}}</p>
-                <p class="seconds">{{gameStat.seconds}}</p>
-            </div>
+        <div class="stats-list">
+            <span *ngIf="globalStats">
+                <div class="user-result" *ngFor="let gameStat of gameStats; let i=index">
+                    <p class="order">{{order[i]}}.</p>
+                    <p class="username" id="Player">{{gameStat.username}}</p>
+                    <p class="minutes" id="Minutes">{{gameStat.minutes}}</p>
+                    <p class="seconds" id="Seconds">{{gameStat.seconds}}</p>
+                </div>
+            </span>
+
+            <span *ngIf="!globalStats">
+                <div class="user-result" *ngFor="let gameStat of userGameStats; let i=index">
+                    <p class="order">{{order[i]}}.</p>
+                    <p class="minutes" id="Minutes">{{gameStat.minutes}}</p>
+                    <p class="seconds" id="Seconds">{{gameStat.seconds}}</p>
+                    <p class="hints" id="Hints Nb">{{gameStat.hints}}</p>
+                </div>
+            </span>
         </div>
     </div>
 </div>
