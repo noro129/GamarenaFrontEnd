@@ -12,6 +12,9 @@
         <span class="button-wrapper">
             <button class="close-instructions" (click)="hideInstructions()">close</button>
         </span>
+        <div class="instructions">
+            <p class="instruction" *ngFor="let instruction of instructions; let i = index">{{i+1}}.&nbsp;{{instruction}}</p>
+        </div>
     </div>
 
     <div class="exit-dialogue" *ngIf="exitGameDialogueShown">

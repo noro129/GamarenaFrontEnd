@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GameService } from '../../services/game.service';
@@ -6,7 +6,7 @@ import { DataShareService } from '../../services/data-share.service';
 
 @Component({
   selector: 'app-game-toolbar',
-  imports: [NgIf, RouterLink, NgClass],
+  imports: [NgFor, NgIf, RouterLink, NgClass],
   templateUrl: './game-toolbar.component.html',
   styleUrl: './game-toolbar.component.scss'
 })
@@ -20,6 +20,7 @@ export class GameToolbarComponent implements OnInit {
   hideControls = false;
   controlsVisibilityButton = '<<';
   usedHints = 0;
+  instructions!: string[];
 
   exitGameDialogueShown = false;
 
@@ -33,7 +34,15 @@ export class GameToolbarComponent implements OnInit {
   }
 
 
-  showInstructionsList() {this.showInstructions=true;}
+  showInstructionsList() {
+    this.showInstructions=true;
+    this.instructions = ["holla", "Como estas", "Esta bueno"];
+    this.gameService.getGameInstructions(this.gameName).subscribe({
+      next: (response) => {
+        console.log(response);
+      }
+    })
+  }
   hideInstructions() {this.showInstructions=false;}
   showExitGameDialogue() {this.exitGameDialogueShown=true;}
   hideExitGameDialogue() {this.exitGameDialogueShown=false;}
