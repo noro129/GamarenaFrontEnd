@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { EMPTY } from 'rxjs';
+import { catchError, EMPTY, throwError } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   console.log(localStorage.getItem("token"));
@@ -28,5 +28,15 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     )
   }
 
-  return next(req);
+  return next(req).pipe(
+    catchError((error) => {
+      if (error.status === 403) {
+        router.navigate(['/']);
+        return EMPTY;
+      }
+      localStorage.removeItem("token");
+
+      return throwError(() => error);
+    })
+  );
 };
