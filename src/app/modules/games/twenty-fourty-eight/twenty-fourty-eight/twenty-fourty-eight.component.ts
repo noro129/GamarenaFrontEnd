@@ -1,5 +1,5 @@
 import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
-import { Component, ElementRef, HostListener, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { GameResultComponent } from "../../../../components/game-result/game-result.component";
 import { delay } from 'rxjs';
 import { GameToolbarComponent } from "../../../../components/game-toolbar/game-toolbar.component";
@@ -11,7 +11,7 @@ import { TimerComponent } from "../../../../components/timer/timer.component";
   templateUrl: './twenty-fourty-eight.component.html',
   styleUrl: './twenty-fourty-eight.component.scss'
 })
-export class TwentyFourtyEightComponent {
+export class TwentyFourtyEightComponent implements OnInit {
   gameName = '2048'
   startGame = false;
   gameEnded = false;
@@ -21,10 +21,21 @@ export class TwentyFourtyEightComponent {
 
 
 
-  boardX = 4;
-  boardY = 4;
-  board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+  boardX = 3;
+  boardY = 3;
+  board !: number[][];
 
+
+  ngOnInit(): void {
+    this.board = [];
+
+    for(let i=0; i<this.boardX; i++) {
+      this.board[i] = [];
+      for(let j=0; j<this.boardY; j++) {
+        this.board[i][j] = 0;
+      }
+    }
+  }
 
   constructor(private renderer : Renderer2) {}
 
