@@ -1,16 +1,16 @@
 <div class="instructions-exit">
     <span class="button-wrapper">
-        <button class="instructions" (click)="showInstructionsList()">?</button>
+        <div class="instructions button" (click)="showInstructionsList()">?</div>
     </span>
     <span class="button-wrapper">
-        <button class="exit" (click)="showExitGameDialogue()">X</button>
+        <div class="exit button" (click)="showExitGameDialogue()">X</div>
     </span>
 </div>
 
 <div class="overlay" *ngIf="showInstructions || exitGameDialogueShown">
     <div class="instructions-list" *ngIf="showInstructions">
         <span class="button-wrapper">
-            <button class="close-instructions" (click)="hideInstructions()">close</button>
+            <div class="close-instructions button" (click)="hideInstructions()">close</div>
         </span>
         <div class="instructions">
             <p class="instruction" *ngFor="let instruction of instructions; let i = index">{{i+1}}.&nbsp;{{instruction}}</p>
@@ -21,10 +21,10 @@
         <p class="exit-message">Are You Sure?</p>
         <div class="yes-no-buttons">
             <span class="button-wrapper">
-                <button class="exit-yes" routerLink="/games-list">Yes</button>
+                <div class="exit-yes button" routerLink="/games-list">Yes</div>
             </span>
             <span class="button-wrapper">
-                <button class="exit-no" (click)="hideExitGameDialogue()">No</button>
+                <div class="exit-no button" (click)="hideExitGameDialogue()">No</div>
             </span>
         </div>
     </div>
@@ -33,16 +33,16 @@
 
 <div class="game-controls" [ngClass]="{'hide-controls' : hideControls}">
     <span class="button-wrapper">
-        <button class="hide-controls-section" (click)="showHideControlsSection()">{{controlsVisibilityButton}}</button>
+        <div class="hide-controls-section button" (click)="showHideControlsSection()">{{controlsVisibilityButton}}</div>
     </span>
     <span class="button-wrapper" *ngIf="!gameStarted">
-        <button class="start-game" (click)="startGame()">Start</button>
+        <div class="start-game button" (click)="startGame()">Start</div>
     </span>
     <span class="button-wrapper" *ngIf="gameStarted">
-        <button class="stop-resume-game" *ngIf="gameStopped" (click)="StopResumeGame()">Resume</button>
-        <button class="stop-resume-game" *ngIf="!gameStopped" (click)="StopResumeGame()">Stop</button>
+        <div class="stop-resume-game button" *ngIf="gameStopped" (click)="StopResumeGame()">Resume</div>
+        <div class="stop-resume-game button" *ngIf="!gameStopped" (click)="StopResumeGame()">Stop</div>
     </span>
     <span class="button-wrapper" *ngIf="numberOfHintsLeft != 0">
-        <button class="show-hint" [attr.remaining-hints]="numberOfHintsLeft" (click)="showHint()">Hints</button>
+        <div class="show-hint button" [attr.remaining-hints]="numberOfHintsLeft" (click)="showHint()">Hints</div>
     </span>
 </div>

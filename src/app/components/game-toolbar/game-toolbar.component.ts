@@ -46,7 +46,10 @@ export class GameToolbarComponent implements OnInit {
   hideInstructions() {this.showInstructions=false;}
   showExitGameDialogue() {this.exitGameDialogueShown=true;}
   hideExitGameDialogue() {this.exitGameDialogueShown=false;}
-  showHint() {this.numberOfHintsLeft--; this.usedHints++;}
+  showHint() {
+    if(!this.gameStarted) return;
+    this.numberOfHintsLeft--; this.usedHints++;
+  }
   startGame() {
     this.gameStarted=true;
     this.gameService.startGame(this.gameName).subscribe({
