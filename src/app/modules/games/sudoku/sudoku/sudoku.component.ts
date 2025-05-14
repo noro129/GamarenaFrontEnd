@@ -1,15 +1,21 @@
 import { NgClass, NgFor } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { SudokuService } from '../sudoku.service';
+import { GameToolbarComponent } from "../../../../components/game-toolbar/game-toolbar.component";
+import { TimerComponent } from "../../../../components/timer/timer.component";
+import { GameStatsBoardComponent } from "../../../../components/game-stats-board/game-stats-board.component";
+import { GameResultComponent } from "../../../../components/game-result/game-result.component";
 
 @Component({
   selector: 'app-soduko',
-  imports: [NgFor, NgClass],
+  imports: [NgFor, NgClass, GameToolbarComponent, TimerComponent, GameStatsBoardComponent, GameResultComponent],
   templateUrl: './sudoku.component.html',
   styleUrl: './sudoku.component.scss'
 })
 export class SudokuComponent implements OnInit {
   gameName = "Sudoku";
+  gameStarted = false;
+  gameSolved = false;
   blocks = 9;
   cells = 9;
   subCells = 9;
@@ -34,15 +40,16 @@ export class SudokuComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.sudokuService.initializeGame().subscribe({
-      next: (response) => {
-        this.sudokuToSolve = response;
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
+    this.sudokuToSolve = [];
 
+    for(let block=0; block<this.blocks; block++) {
+      this.sudokuToSolve[block] = [];
+      for(let cell=0; cell<this.cells; cell++) {
+        this.sudokuToSolve[block][cell] = '';
+      }
+    }
+
+    
     this.populateAttemptAndGuessesMatrix();
   }
 
@@ -66,14 +73,27 @@ export class SudokuComponent implements OnInit {
     return Array.from({ length : size}, (_, i) => i);
   }
 
+  handleGameStart(event : boolean) {
+    this.gameStarted=true;
+    this.sudokuService.initializeGame().subscribe({
+      next: (response) => {
+        this.sudokuToSolve = response;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+
+  }
+
   clickCell(block : number, cell : number) {
-    if(this.sudokuToSolve[block][cell] !== '') return;
+    if(!this.gameStarted || this.sudokuToSolve[block][cell] !== '') return;
     this.coordinates = [block, cell];
   }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if(this.coordinates[0] == -1) return;
+    if(!this.gameStarted || this.coordinates[0] == -1) return;
     if(event.key.toUpperCase() === 'P') {
       this.placeMode= !this.placeMode;
       this.pencilMode= !this.pencilMode;

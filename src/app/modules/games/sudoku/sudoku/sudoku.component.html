@@ -19,3 +19,8 @@
     <span class="button-wrapper"><button class="pencil" [ngClass]="{'chosen-mode' : pencilMode}" (click)="buttonClick(false)">Pencil</button></span>
     <span class="button-wrapper"><button class="restart" (click)="restartGame()">Restart</button></span>
 </div>
+
+<app-game-toolbar [gameName]="gameName" (gameStartedEvent)="handleGameStart($event)" [numberOfHintsLeft]="4"></app-game-toolbar>
+<app-timer [startTimer]="gameStarted" [stopTimer]="gameSolved"></app-timer>
+<app-game-stats-board [gameName]="gameName" [hints]="4"></app-game-stats-board>
+<app-game-result [isVisible]="gameSolved" [isSuccess]="true"></app-game-result>
