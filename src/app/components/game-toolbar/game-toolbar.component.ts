@@ -39,6 +39,7 @@ export class GameToolbarComponent implements OnInit {
     this.instructions = ["holla", "Como estas", "Esta bueno"];
     this.gameService.getGameInstructions(this.gameName).subscribe({
       next: (response) => {
+        this.instructions = response;
         console.log(response);
       }
     })

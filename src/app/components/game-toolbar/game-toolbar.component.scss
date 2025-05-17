@@ -61,7 +61,7 @@
 
     .instructions-list{
         position: relative;
-        width: 400px;
+        width: 450px;
         height: max-content;
         padding: 10px;
         background-color: #333;
@@ -92,6 +92,18 @@
 
         .instructions{
             margin-top: 40px;
+
+            .instruction{
+                text-align: left;
+                margin: 5px 0;
+                font-weight: bolder;
+                color: var(--color-2);
+                border-left: 4px solid var(--color-2);
+                border-right: 4px solid var(--color-2);
+                letter-spacing: 1px;
+                padding: 0 10px;
+                background-color: var(--timberwolf);
+            }
         }
 
     }

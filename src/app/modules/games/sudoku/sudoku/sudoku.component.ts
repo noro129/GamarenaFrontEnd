@@ -35,9 +35,7 @@ export class SudokuComponent implements OnInit {
   placeMode = true;
   pencilMode = false;
 
-  constructor(private sudokuService : SudokuService) {
-    
-  }
+  constructor(private sudokuService : SudokuService) {}
   
   ngOnInit(): void {
     this.sudokuToSolve = [];

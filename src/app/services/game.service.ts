@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { Game } from '../models/game';
 import { GameStat } from '../models/GameStat';
 import { UserGameStat } from '../models/UserGameStat';
-import { GameInstruction } from '../models/GameInstruction';
 
 @Injectable({
   providedIn: 'root'
@@ -45,8 +44,8 @@ export class GameService {
     return this.http.get<UserGameStat[]>(this.URL+"/stats/user", {params});
   }
 
-  getGameInstructions(gameName : string) : Observable<GameInstruction[]> {
+  getGameInstructions(gameName : string) : Observable<string[]> {
     const params = new HttpParams().set("gameName", gameName);
-    return this.http.get<GameInstruction[]>(this.URL+"/instructions", {params});
+    return this.http.get<string[]>(this.URL+"/instructions", {params});
   }
 }

@@ -1,7 +1,6 @@
 import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { GameResultComponent } from "../../../../components/game-result/game-result.component";
-import { delay } from 'rxjs';
 import { GameToolbarComponent } from "../../../../components/game-toolbar/game-toolbar.component";
 import { TimerComponent } from "../../../../components/timer/timer.component";
 
@@ -21,8 +20,8 @@ export class TwentyFourtyEightComponent implements OnInit {
 
 
 
-  boardX = 3;
-  boardY = 3;
+  boardX = 4;
+  boardY = 4;
   board !: number[][];
 
 
